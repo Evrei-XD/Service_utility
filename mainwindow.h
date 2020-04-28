@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
+
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +20,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QSerialPort *serial;
+
+private slots:
+    void serialRecieve();//получаем данные
+
+
 };
 
 #endif // MAINWINDOW_H
