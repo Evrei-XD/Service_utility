@@ -140,6 +140,7 @@ void MainWindow::sendByte (QString arg1)
     QByteArray byteArrayMessage;
     for (int i=0; i<=listBytes.size()-1; i++)
     {
+        if(listBytes[i][0] == "0") {separateSecondByte(listBytes[i][1]);}
 //        byteArrayMessage[i] = listBytes[i].toInt(true, 16);
 //        if(listBytes[i] == "af")
 //        {
@@ -162,3 +163,5 @@ void MainWindow::sendByte (QString arg1)
     }
     serial->write(byteArrayMessage);
 }
+
+
