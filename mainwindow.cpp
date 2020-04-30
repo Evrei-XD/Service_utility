@@ -60,9 +60,10 @@ void MainWindow::on_send_message_clicked()
 {
     QString sendMessage = ui->edit_line->text();
     QByteArray byteArrayMessage=sendMessage.toLocal8Bit();
-    for (int i=0; i<=255; i++){
-        byteArrayMessage[i] = i;
-    }
+//    for (int i=0; i<=255; i++){
+//        byteArrayMessage[i] = i;
+//    }
+    sendBytes(ui->edit_line->text());
     ui->label->setText(byteArrayMessage.toHex());
     serial->write(byteArrayMessage);//записываем данные
 }
@@ -124,8 +125,6 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
         odin = "0";
     }
 
-    sendByte(arg1);
-
 //    ui->label->setText(formatedEditLine +"\n"+
 //                       "последний символ: " + byteArrayMessage +"\n"+
 //                       odin);//QString::number(byteArrayMessage.count())
@@ -133,32 +132,61 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
 
 }
 
-void MainWindow::sendByte (QString arg1)
+int sendByte = 0;
+void MainWindow::sendBytes (QString arg1)
 {
     QStringList listBytes = arg1.split(" ");
     QString editedArg = arg1;
     QByteArray byteArrayMessage;
     for (int i=0; i<=listBytes.size()-1; i++)
     {
-//        byteArrayMessage[i] = listBytes[i].toInt(true, 16);
-//        if(listBytes[i] == "af")
-//        {
-//            odin = listBytes[i][0];
-//        } else {
-//            odin = "0";
-//        }
-
-//        ui->label->setText(formatedEditLine +"\n"+
-//                           "последний символ: " + byteArrayMessage +"\n"+
-//                           odin);//QString::number(byteArrayMessage.count())
-
+        if(listBytes[i][0] == "a") {}//sendByte = 0 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "1") {sendByte = 1 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "2") {sendByte = 2 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "3") {sendByte = 3 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "4") {sendByte = 4 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "5") {sendByte = 5 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "6") {sendByte = 6 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "7") {sendByte = 7 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "8") {sendByte = 8 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "9") {sendByte = 9 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "a") {sendByte = 10 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "b") {sendByte = 11 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "c") {sendByte = 12 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "d") {sendByte = 13 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "e") {sendByte = 14 * 16; separateSecondByte(listBytes[i][1]);}
+//        if(listBytes[i][0] == "f") {sendByte = 15 * 16; separateSecondByte(listBytes[i][1]);}
 
 //        if(listBytes[i].size() == 1){
-//            ui->label->setText(listBytes[i] + "0");
-//        } else {
-//            ui->label->setText(listBytes[i]);
-//        }
-
+//            ui->edit_line->setText(ui->edit_line->text() + "0");
+//        } else {  }
     }
-    serial->write(byteArrayMessage);
 }
+
+void MainWindow::separateSecondByte (char secondByte)
+{
+    QByteArray byteArrayMessage;
+    if(secondByte == "0"){sendByte += 0;}
+//    if(secondByte == "1"){sendByte += 1;}
+//    if(secondByte == "2"){sendByte += 2;}
+//    if(secondByte == "3"){sendByte += 3;}
+//    if(secondByte == "4"){sendByte += 4;}
+//    if(secondByte == "5"){sendByte += 5;}
+//    if(secondByte == "6"){sendByte += 6;}
+//    if(secondByte == "7"){sendByte += 7;}
+//    if(secondByte == "8"){sendByte += 8;}
+//    if(secondByte == "9"){sendByte += 9;}
+//    if(secondByte == "a"){sendByte += 10;}
+//    if(secondByte == "b"){sendByte += 11;}
+//    if(secondByte == "c"){sendByte += 12;}
+//    if(secondByte == "d"){sendByte += 13;}
+//    if(secondByte == "e"){sendByte += 14;}
+//    if(secondByte == "f"){sendByte += 15;}
+    byteArrayMessage = sendByte;
+    serial->write(byteArrayMessage);
+
+    ui->label->setText(formatedEditLine +"\n"+
+                       "последний символ: " + byteArrayMessage +"\n"+
+                       odin);//QString::number(byteArrayMessage.count())
+}
+
