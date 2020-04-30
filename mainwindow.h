@@ -28,7 +28,7 @@ private slots:
     void on_send_message_clicked();
     void on_edit_line_textChanged(const QString &arg1);
     void sendBytes (QString arg1);
-    void separateSecondByte (char secondByte);
+    void separateSecondByte (QString secondByte);
 };
 
 #endif // MAINWINDOW_H
