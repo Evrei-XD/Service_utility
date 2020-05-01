@@ -17,9 +17,9 @@
    <widget class="QPushButton" name="send_message">
     <property name="geometry">
      <rect>
-      <x>204</x>
-      <y>20</y>
-      <width>101</width>
+      <x>210</x>
+      <y>40</y>
+      <width>91</width>
       <height>23</height>
      </rect>
     </property>
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>40</y>
       <width>191</width>
       <height>21</height>
      </rect>
@@ -41,9 +41,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>90</y>
       <width>291</width>
-      <height>181</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -55,7 +55,7 @@
        <x>0</x>
        <y>0</y>
        <width>289</width>
-       <height>179</height>
+       <height>139</height>
       </rect>
      </property>
      <widget class="QLabel" name="label">
@@ -94,27 +94,147 @@
        <string>1234567890 awds авдс 1b 3f ac f4 6c</string>
       </property>
      </widget>
-     <widget class="QGraphicsView" name="graphicsView">
-      <property name="geometry">
-       <rect>
-        <x>-120</x>
-        <y>200</y>
-        <width>256</width>
-        <height>192</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QGraphicsView" name="graphicsView_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>50</y>
-        <width>291</width>
-        <height>131</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
+   </widget>
+   <widget class="QComboBox" name="selection_com_port">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>10</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>91</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <item>
+     <property name="text">
+      <string>com1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com5</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com7</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com9</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com10</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com11</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com12</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com13</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com14</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>com15</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="connect_button">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>10</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="info_com_port">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Symbol</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Connection port</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

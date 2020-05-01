@@ -16,14 +16,13 @@ MainWindow::MainWindow(QWidget *parent) :
 //    QObject::connect(send_message,SIGNAL(clicked(bool)),this,SLOT(slot_send_text()));
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("com4");//указали com-порт и параметры порта (далее)
+    serial->setPortName("com1");//указали com-порт и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud9600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);
     serial->setFlowControl(QSerialPort::NoFlowControl);
     serial->open((QIODevice::ReadWrite));//открыли порт
-//    serial->write("Привет");//записываем данные
 
     connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
 
@@ -48,12 +47,13 @@ MainWindow::~MainWindow()
     delete serial;
 }
 
+QString reseiveMessage = "<--- ";
 void MainWindow::serialRecieve()//получаем данные
 {
     QByteArray byteArrey;//массив байт
     byteArrey = serial->readAll();//читаем всё
-    printf(byteArrey.toHex());
-    ui->label->setText("1234567890");//setText(byteArrey);//переводим в hex .toHex()
+    reseiveMessage += byteArrey.toHex() + " ";
+    ui->label->setText(reseiveMessage);//setText(byteArrey);//переводим в hex .toHex()
 }
 
 void MainWindow::on_send_message_clicked()
@@ -66,29 +66,104 @@ void MainWindow::on_send_message_clicked()
 
 void MainWindow::set_stule()
 {
-    ui->send_message->setStyleSheet("QPushButton{"
-                                "   color: #555555;"
-                                "   background-color: white;"
-                                "   border: lpx solid #828282;"
-                                "   border-radius: 3px"
-                                "}"
-                                ""
-                                "QPushButton:hover{"
-                                "   border: lpx solid #828282;"
-                                "   background-color: #d5d5d5;"
-                                "}"
-                                ""
-                                "QPushButton:hover:pressed{"
-                                "   background-color: gray;"
-                                "   color: white;"
-                                "}");
-    ui->edit_line->setGeometry(QRect(10, 20, 191, 23));
-    ui->edit_line->setStyleSheet("QLineEdit{"
-                             "   color: #555555;"
-                             "   background-color: white;"
-                             "   border: lpx solid #828282;"
-                             "   border-radius: 3px"
-                             "}");
+    ui->send_message->setStyleSheet(
+                     "QPushButton{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}"
+                     ""
+                     "QPushButton:hover{"
+                     "   border: lpx solid #828282;"
+                     "   background-color: #d5d5d5;"
+                     "}"
+                     ""
+                     "QPushButton:hover:pressed{"
+                     "   background-color: gray;"
+                     "   color: white;"
+                     "}");
+    ui->edit_line->setGeometry(QRect(10, 40, 191, 23));
+    ui->edit_line->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
+    ui->connect_button->setStyleSheet(
+                      "QPushButton{"
+                      "   color: #555555;"
+                      "   background-color: white;"
+                      "   border: lpx solid #828282;"
+                      "   border-radius: 3px"
+                      "}"
+                      ""
+                      "QPushButton:hover{"
+                      "   border: lpx solid #828282;"
+                      "   background-color: #d5d5d5;"
+                      "}"
+                      ""
+                      "QPushButton:hover:pressed{"
+                      "   background-color: gray;"
+                      "   color: white;"
+                      "}");
+    ui->selection_com_port->setStyleSheet(
+                    "QComboBox {"
+                    "   color: #555555;"
+                    "    border: 1px solid gray;"
+                    "    border-radius: 3px;"
+//                    "    padding: 1px 18px 1px 3px;"
+                    "    min-width: 6em;"
+                    "}"
+                    ""
+                    "QComboBox:editable {"
+                    "    background: white;"
+                    "}"
+                    ""
+                    "QComboBox:!editable, QComboBox::drop-down:editable {"
+                    "     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                    "                                 stop: 0 white, stop: 0.4 white,"
+                    "                                 stop: 1.0 #F3F3F3);"
+                    "}"
+                    ""
+
+                    "QComboBox:!editable:on, QComboBox::drop-down:editable:on {"
+                    "    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                    "                                stop: 0 #F3F3F3, stop: 0.6 white,"
+                    "                                stop: 1.0 white);"
+                    "}"
+                    ""
+                    "QComboBox:on {" /* shift the text when the popup opens */
+                    "    padding-top: 3px;"
+                    "    padding-left: 4px;"
+                    "}"
+                    ""
+                    "QComboBox::drop-down {"
+                    "    subcontrol-origin: padding;"
+                    "    subcontrol-position: top right;"
+                    "    width: 15px;"
+                    ""
+                    "    border-left-width: 1px;"
+                    "    border-left-color: darkgray;"
+                    "    border-left-style: solid;" /* just a single line */
+                    "    border-top-right-radius: 3px;" /* same radius as the QComboBox */
+                    "    border-bottom-right-radius: 3px;"
+                    "}"
+                    ""
+//                    "QComboBox::down-arrow {"
+//                    "    image: url(/usr/share/icons/crystalsvg/16x16/actions/1downarrow.png);"
+//                    "}"
+//                    ""
+                    "QComboBox::down-arrow:on {" /* shift the arrow when popup is open */
+                    "    top: 1px;"
+                    "    left: 1px;"
+                    "}");
+    ui->info_com_port->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
 }
 
 QString formatedEditLine = "";
@@ -266,3 +341,21 @@ void MainWindow::separateSecondByte (QString secondByte)
                        odin);//QString::number(byteArrayMessage.count())
 }
 
+
+void MainWindow::on_connect_button_clicked()
+{
+    int index =  ui->selection_com_port->currentIndex();
+
+    serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
+    serial->setPortName(ui->selection_com_port->currentText());//указали com-порт и параметры порта (далее)
+    serial->setBaudRate(QSerialPort::Baud9600);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    serial->open((QIODevice::ReadWrite));//открыли порт
+
+    connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
+
+    ui->label->setText(QString::number(index) + " " + ui->selection_com_port->currentText());
+}

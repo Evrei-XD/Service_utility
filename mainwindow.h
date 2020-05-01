@@ -29,6 +29,7 @@ private slots:
     void on_edit_line_textChanged(const QString &arg1);
     void sendBytes (QString arg1);
     void separateSecondByte (QString secondByte);
+    void on_connect_button_clicked();
 };
 
 #endif // MAINWINDOW_H
