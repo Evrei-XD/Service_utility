@@ -65,9 +65,26 @@ void MainWindow::serialRecieve()//получаем данные
     byteArrey[1] = 0;
     byteArrey[2] = 2;
     byteArrey[3] = 0;
+    byteArrey[4] = 3;
+    byteArrey[5] = 0;
+    byteArrey[6] = 4;
+    byteArrey[7] = 0;
+    byteArrey[8] = 5;
+    byteArrey[9] = 0;
+    byteArrey[10] = 6;
+    byteArrey[11] = 0;
+    byteArrey[12] = 7;
+    byteArrey[13] = 0;
+    QDataStream dataStream(byteArrey);
     serialBuffer = byteArrey.toHex();//QString::fromStdString(byteArrey.toStdString());
-    quint16 q = qFromBigEndian<quint16>((const uchar*)byteArrey.constData());
-    qDebug() << serialBuffer + "   int = "+ QString::number(q);
+
+    quint16 vector[byteArrey.size()/2];
+    qDebug() << serialBuffer + " size="+QString::number(byteArrey.size());
+    for(int i=0; i<byteArrey.size(); i+=2)
+    {
+        vector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArrey.constData()+i));
+        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(vector[i/2]);
+    }
 //    serialBuffer = QString::fromStdString(byteArrey.toStdString());
 //    qDebug() << serialBuffer;
 //    reseiveMessage += byteArrey.toHex() + " ";
