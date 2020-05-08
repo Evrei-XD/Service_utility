@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/resource">
+        <file>usr/share/icons/crystalsvg/16x16/actions/1downarrow.png</file>
+    </qresource>
+</RCC>

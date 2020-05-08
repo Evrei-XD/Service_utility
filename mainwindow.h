@@ -21,9 +21,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QSerialPort *serial;
+    QByteArray byteArrey;//массив байт
+    QString serialBuffer;
 
 private slots:
     void serialRecieve();//получаем данные
+    void serialRecieveFinish();//заканчиваем приём данных
     void set_stule();//наряжаем кнопочки и вьюхи
     void on_send_message_clicked();
     void on_edit_line_textChanged(const QString &arg1);

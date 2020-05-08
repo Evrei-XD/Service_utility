@@ -41,9 +41,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>70</y>
       <width>291</width>
-      <height>141</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -55,45 +55,41 @@
        <x>0</x>
        <y>0</y>
        <width>289</width>
-       <height>139</height>
+       <height>169</height>
       </rect>
      </property>
-     <widget class="QLabel" name="label">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>291</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <family>Segoe UI Symbol</family>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::NoContextMenu</enum>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>1234567890 awds авдс 1b 3f ac f4 6c</string>
-      </property>
-     </widget>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Segoe UI Symbol</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::NoContextMenu</enum>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QComboBox" name="selection_com_port">
@@ -113,77 +109,77 @@
     </property>
     <item>
      <property name="text">
-      <string>com1</string>
+      <string>COM1</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com2</string>
+      <string>COM2</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com3</string>
+      <string>COM3</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com4</string>
+      <string>COM4</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com5</string>
+      <string>COM5</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com6</string>
+      <string>COM6</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com7</string>
+      <string>COM7</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com8</string>
+      <string>COM8</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com9</string>
+      <string>COM9</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com10</string>
+      <string>COM10</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com11</string>
+      <string>COM11</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com12</string>
+      <string>COM12</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com13</string>
+      <string>COM13</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com14</string>
+      <string>COM14</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>com15</string>
+      <string>COM15</string>
      </property>
     </item>
    </widget>
