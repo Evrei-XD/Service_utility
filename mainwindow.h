@@ -40,6 +40,8 @@ private slots:
     void on_start_clicked();
     void on_pause_clicked();
     void on_stop_clicked();
+    void on_send_shake_time_textChanged(const QString &arg1);
+    void print_log();
 };
 
 #endif // MAINWINDOW_H

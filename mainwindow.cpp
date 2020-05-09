@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "LogCategories.h"
+#include "constant.h"
+#include "mainwindow.h"
+#include "mainwindow.h"
 #include <QDebug>
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
@@ -157,6 +160,34 @@ void MainWindow::set_stule()
                      "}");
     ui->edit_line->setGeometry(QRect(10, 40, 211, 23));
     ui->edit_line->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
+    ui->send_shake_time->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
+    ui->send_cool_time->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
+    ui->send_stop_current->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
+    ui->send_stop_strength->setStyleSheet(
                      "QLineEdit{"
                      "   color: #555555;"
                      "   background-color: white;"
@@ -364,6 +395,41 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_start_2->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_start_3->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_start_4->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_start_5->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_start->setStyleSheet(
+                "QLabel{"
+                "   color: #555555;"
+                "}"
+                );
+    ui->info_pause->setStyleSheet(
+                "QLabel{"
+                "   color: #555555;"
+                "}"
+                );
+    ui->info_stop->setStyleSheet(
+                "QLabel{"
+                "   color: #555555;"
+                "}"
+                );
     ui->scrollArea->setObjectName( "scrollArea1" );
     ui->scrollArea->setStyleSheet(
                     "#scrollArea1{"
@@ -394,21 +460,6 @@ void MainWindow::set_stule()
                 "#frame3{"
                 "border-radius: 3px;"
                 "border: 1px solid #d5d5d5;"
-                "}"
-                );
-    ui->info_start->setStyleSheet(
-                "QLabel{"
-                "   color: #555555;"
-                "}"
-                );
-    ui->info_pause->setStyleSheet(
-                "QLabel{"
-                "   color: #555555;"
-                "}"
-                );
-    ui->info_stop->setStyleSheet(
-                "QLabel{"
-                "   color: #555555;"
                 "}"
                 );
 }
@@ -444,6 +495,30 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
     }
 
 
+}
+
+
+void MainWindow::on_send_shake_time_textChanged(const QString &arg1)
+{
+
+      for (int i=0; i<=20; i++)
+      {
+          QTimer::singleShot(i*1000, this, SLOT(print_log()));
+      }
+//    int number = arg1.toInt();
+//    qDebug()<<QString::number(number);
+//    timer->stop();
+//    connect(timer, SIGNAL(timeout()), this, SLOT(print_log()));
+//    QTimer::singleShot(1000, this, SLOT(update_ui()));
+//    timer->start(1000);
+}
+void MainWindow::print_log ()
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+    qDebug()<<asctime(timeinfo);
 }
 
 int sendByte = 0;
@@ -612,16 +687,30 @@ void MainWindow::on_connect_button_clicked()
 
 void MainWindow::on_start_clicked()
 {
-//    QMessageBox::information(this, "start clicked", "\n"+ui->start->text()+" ______________________");
+    QByteArray byteArrayMessage;
+    byteArrayMessage[0] = SEND;
+    byteArrayMessage[1] = MOVEMENT;
+    byteArrayMessage[2] = 1;
+    serial->write(byteArrayMessage);
 }
 
 void MainWindow::on_pause_clicked()
 {
-//    QMessageBox::information(this, "pause clicked", "\n"+ui->pause->text()+" ______________________");
+    QByteArray byteArrayMessage;
+    byteArrayMessage[0] = SEND;
+    byteArrayMessage[1] = MOVEMENT;
+    byteArrayMessage[2] = 2;
+    serial->write(byteArrayMessage);
 }
 
 void MainWindow::on_stop_clicked()
 {
-//    QMessageBox::information(this, "stop clicked", "\n"+ui->stop->text()+" ______________________");
+    QByteArray byteArrayMessage;
+    byteArrayMessage[0] = SEND;
+    byteArrayMessage[1] = MOVEMENT;
+    byteArrayMessage[2] = 3;
+    serial->write(byteArrayMessage);
 }
+
+
 

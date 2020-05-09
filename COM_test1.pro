@@ -23,6 +23,7 @@ SOURCES += \
 
 HEADERS  += \
     LogCategories.h \
+    constant.h \
     logcategories.h \
          mainwindow.h \
     connect.h
