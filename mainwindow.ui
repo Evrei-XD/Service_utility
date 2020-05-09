@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>710</width>
-    <height>485</height>
+    <width>701</width>
+    <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,8 +41,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>340</y>
-      <width>691</width>
+      <y>220</y>
+      <width>681</width>
       <height>101</height>
      </rect>
     </property>
@@ -54,7 +54,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>689</width>
+       <width>679</width>
        <height>99</height>
       </rect>
      </property>
@@ -973,13 +973,29 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>311</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>710</width>
+     <width>701</width>
      <height>21</height>
     </rect>
    </property>

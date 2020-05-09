@@ -327,13 +327,23 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+//    ui->scrollArea->setObjectName( "scrollArea1" );
 //    ui->scrollArea->setStyleSheet(
-//                    "QScrollArea{"
+//                    "#scrollArea1{"
 //                    "   color: #555555;"
 //                    "   background-color: white;"
 //                    "   border-radius: 3px;"
+//                    "border: 1px solid #d5d5d5;"
 //                    "}"
 //                    );
+    ui->frame->setObjectName( "frame1" );
+    ui->frame->setStyleSheet(
+                "#frame1{"
+                "border-radius: 3px;;"
+                "border-top-right-radius: 6px;"
+                "border: 1px solid #d5d5d5;"
+                "}"
+                );
 }
 
 QString formatedEditLine = "";
