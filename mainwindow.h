@@ -1,5 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+//#define RECEIVE_VARIABLES =
+
 
 #include <QMainWindow>
 #include <QtSerialPort/QSerialPort>
@@ -26,13 +28,13 @@ private:
 
 private slots:
     void serialRecieve();//получаем данные
-    void serialRecieveFinish();//заканчиваем приём данных
     void set_stule();//наряжаем кнопочки и вьюхи
     void on_send_message_clicked();
     void on_edit_line_textChanged(const QString &arg1);
     void sendBytes (QString arg1);
     void separateSecondByte (QString secondByte);
     void on_connect_button_clicked();
+    void update_ui();
 };
 
 #endif // MAINWINDOW_H

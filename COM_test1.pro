@@ -16,11 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    logcategories.cpp \
         main.cpp\
         mainwindow.cpp \
     connect.cpp
 
 HEADERS  += \
+    LogCategories.h \
+    logcategories.h \
          mainwindow.h \
     connect.h
 

@@ -1,9 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "LogCategories.h"
 #include <QDebug>
 #include <QtSerialPort/QSerialPortInfo>
+#include <QDateTime>
+#include <QFile>
 #include <QPushButton>
 #include <QString>
+#include <QTimer>
 #include <QtEndian>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,8 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     set_stule();
     serialBuffer = "";
+    QString logName = "Log_"+QDateTime::currentDateTime().toString("hh:mm:ss___dd.MM.yyyy") + ".txt";
+//    QFile file(logName);
+//    if (file.open(QIODevice::WriteOnly | QIODevice::Append)) {
+//        file.write("blablabla");
+//        file.close();
+//    }
 
-    ui->edit_line->setText("f0 ab 1d");
+//    ui->edit_line->setText("f0 ab 1d");
 //    QObject::connect(send_message,SIGNAL(clicked(bool)),this,SLOT(slot_send_text()));
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
@@ -25,7 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);
     serial->setFlowControl(QSerialPort::NoFlowControl);
-    serial->write("UPDATE");
+
+    update_ui();//вызов повторяющейся функции
 
     QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
 //    connect(serial, SIGNAL(ReadPastEnd()), this, SLOT(serialRecieveFinish()));
@@ -42,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
         if((info.hasProductIdentifier() || info.hasVendorIdentifier()))
         {
-            qDebug()<<info.productIdentifier();
-            qDebug()<<info.vendorIdentifier();
+            qDebug(logStend())<<info.productIdentifier();
+            qDebug(logStend())<<info.vendorIdentifier();
         }
     }
 }
@@ -55,6 +66,28 @@ MainWindow::~MainWindow()
     //закрываем соединение при выходе
     serial->close();
     delete serial;
+}
+
+quint16 receiveVector[7];
+void MainWindow::update_ui()
+{
+    serial->write("UPDATE");
+    ui->receive_shakes_number->setText(QString::number(receiveVector[0]));
+    ui->receive_current->setText(QString::number(receiveVector[1]));
+    ui->receive_strength->setText(QString::number(receiveVector[2]));
+    ui->receive_shake_time->setText(QString::number(receiveVector[3]));
+    ui->receive_cool_time->setText(QString::number(receiveVector[4]));
+    ui->receive_stop_current->setText(QString::number(receiveVector[5]));
+    ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+    QTimer::singleShot(1000, this, SLOT(update_ui()));
+
+
+
+//      time_t rawtime;
+//      struct tm * timeinfo;
+//      time ( &rawtime );
+//      timeinfo = localtime ( &rawtime );
+//      qDebug()<<"Текущее локальное время и дата: "+QDateTime::currentDateTime().toString("hh:mm:ss___dd.MM.yyyy");
 }
 
 QString reseiveMessage = "<--- ";
@@ -76,26 +109,20 @@ void MainWindow::serialRecieve()//получаем данные
     byteArrey[12] = 7;
     byteArrey[13] = 0;
     QDataStream dataStream(byteArrey);
-    serialBuffer = byteArrey.toHex();//QString::fromStdString(byteArrey.toStdString());
+    serialBuffer = byteArrey.toHex();
 
-    quint16 vector[byteArrey.size()/2];
-    qDebug() << serialBuffer + " size="+QString::number(byteArrey.size());
+//    quint16 receiveVector[byteArrey.size()/2];
+//    qDebug() << serialBuffer + " size="+QString::number(byteArrey.size());
     for(int i=0; i<byteArrey.size(); i+=2)
     {
-        vector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArrey.constData()+i));
-        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(vector[i/2]);
+        receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArrey.constData()+i));
+        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(receiveVector[i/2]);
     }
 //    serialBuffer = QString::fromStdString(byteArrey.toStdString());
 //    qDebug() << serialBuffer;
 //    reseiveMessage += byteArrey.toHex() + " ";
 //    QString oldLable = ui->label->text();
 //    ui->label->setText(oldLable + reseiveMessage +"\n");//QString::number(byteArrayMessage.count())
-}
-
-void MainWindow::serialRecieveFinish()
-{
-    QString oldLable = ui->label->text();
-    ui->label->setText(oldLable +"ЗАКОНЧЕН ПРИЁМ"+"\n");
 }
 
 void MainWindow::on_send_message_clicked()
@@ -125,7 +152,7 @@ void MainWindow::set_stule()
                      "   background-color: gray;"
                      "   color: white;"
                      "}");
-    ui->edit_line->setGeometry(QRect(10, 40, 191, 23));
+    ui->edit_line->setGeometry(QRect(10, 40, 211, 23));
     ui->edit_line->setStyleSheet(
                      "QLineEdit{"
                      "   color: #555555;"
@@ -192,15 +219,110 @@ void MainWindow::set_stule()
                     "    border-bottom-right-radius: 3px;"
                     "}"
                     ""
-                    "QComboBox::down-arrow {"
-                    "    image: url(:/resource/icons/16x16/1downarrow.png);"
-                    "}"
-                    ""
+//                    "QComboBox::down-arrow {"
+//                    "    image: url(:/resource/icons/16x16/1downarrow.png);"
+//                    "}"
+//                    ""
                     "QComboBox::down-arrow:on {" /* shift the arrow when popup is open */
                     "    top: 1px;"
                     "    left: 1px;"
                     "}");
     ui->info_com_port->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_2->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_3->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_4->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_5->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_6->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_7->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_8->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_shakes_number->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_current->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_strength->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_shake_time->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_cool_time->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_stop_current->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_stop_strenghth->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_16->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_17->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_18->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_19->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_20->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
                     "}"
