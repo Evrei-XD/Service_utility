@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
+    <width>651</width>
     <height>365</height>
    </rect>
   </property>
@@ -42,7 +42,7 @@
      <rect>
       <x>10</x>
       <y>220</y>
-      <width>681</width>
+      <width>631</width>
       <height>101</height>
      </rect>
     </property>
@@ -54,7 +54,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>679</width>
+       <width>629</width>
        <height>99</height>
       </rect>
      </property>
@@ -232,747 +232,6 @@
      <string>Подключаемый порт</string>
     </property>
    </widget>
-   <widget class="QLabel" name="info_com_port_2">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Количество сжатий:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_3">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Сила тока:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_4">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Сила сжатия:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_5">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>130</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Время сжатия:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_6">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Время простоя:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_7">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Ток схвата:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_8">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>Сила схвата:</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_shakes_number">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>70</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0001</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_current">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>90</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0000</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_strength">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>110</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0000</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_shake_time">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>130</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0000</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_cool_time">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>150</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0000</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_stop_current">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>170</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0000</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="receive_stop_strenghth">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>190</y>
-      <width>41</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>0000</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_16">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>90</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>мА</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_17">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>110</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>г</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_18">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>130</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>мс</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_19">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>150</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>мс</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="info_com_port_20">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>190</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI Symbol</family>
-      <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>г</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -988,6 +247,980 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <widget class="QLabel" name="receive_strength">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>40</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_4">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Сила сжатия:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>0</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Количество сжатий:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="receive_stop_strenghth">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>120</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="receive_shake_time">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>60</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_17">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>40</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>г</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_8">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Сила схвата:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="receive_stop_current">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>100</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_16">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>20</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>мА</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_5">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Время сжатия:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_3">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Сила тока:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="receive_shakes_number">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0001</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_20">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>120</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>г</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="receive_cool_time">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>80</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_18">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>60</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>мс</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_19">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>80</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>мс</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_7">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Ток схвата:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="info_com_port_6">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Время простоя:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="receive_current">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>20</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Symbol</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>0000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_3">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>70</y>
+      <width>311</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="frame_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>311</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QRadioButton" name="pause">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>30</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="stop">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>30</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="start">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>30</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
+      <property name="toolTip">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="autoRepeatDelay">
+       <number>1</number>
+      </property>
+      <property name="autoRepeatInterval">
+       <number>1</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_start">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Старт</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_pause">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>0</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Пауза</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_stop">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>0</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Стоп</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="tenso_calib">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>40</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Тензо калибровка</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -995,7 +1228,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>701</width>
+     <width>651</width>
      <height>21</height>
     </rect>
    </property>

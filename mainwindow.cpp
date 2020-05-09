@@ -5,10 +5,13 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
 #include <QFile>
+#include <QMessageBox>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QString>
 #include <QTimer>
 #include <QtEndian>
+#include <qmessagebox.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     set_stule();
     serialBuffer = "";
+    productIdentifier = "";
+    vendorIdentifier = "";
     QString logName = "Log_"+QDateTime::currentDateTime().toString("hh:mm:ss___dd.MM.yyyy") + ".txt";
 //    QFile file(logName);
 //    if (file.open(QIODevice::WriteOnly | QIODevice::Append)) {
@@ -93,26 +98,24 @@ void MainWindow::update_ui()
 QString reseiveMessage = "<--- ";
 void MainWindow::serialRecieve()//получаем данные
 {
-//    byteArrey = serial->readAll();//читаем всё
-    byteArrey[0] = 1;
-    byteArrey[1] = 0;
-    byteArrey[2] = 2;
-    byteArrey[3] = 0;
-    byteArrey[4] = 3;
-    byteArrey[5] = 0;
-    byteArrey[6] = 4;
-    byteArrey[7] = 0;
-    byteArrey[8] = 5;
-    byteArrey[9] = 0;
-    byteArrey[10] = 6;
-    byteArrey[11] = 0;
-    byteArrey[12] = 7;
-    byteArrey[13] = 0;
+    byteArrey = serial->readAll();//читаем всё
+//    byteArrey[0] = 1;
+//    byteArrey[1] = 0;
+//    byteArrey[2] = 2;
+//    byteArrey[3] = 0;
+//    byteArrey[4] = 3;
+//    byteArrey[5] = 0;
+//    byteArrey[6] = 4;
+//    byteArrey[7] = 0;
+//    byteArrey[8] = 5;
+//    byteArrey[9] = 0;
+//    byteArrey[10] = 6;
+//    byteArrey[11] = 0;
+//    byteArrey[12] = 7;
+//    byteArrey[13] = 0;
     QDataStream dataStream(byteArrey);
     serialBuffer = byteArrey.toHex();
 
-//    quint16 receiveVector[byteArrey.size()/2];
-//    qDebug() << serialBuffer + " size="+QString::number(byteArrey.size());
     for(int i=0; i<byteArrey.size(); i+=2)
     {
         receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArrey.constData()+i));
@@ -160,6 +163,40 @@ void MainWindow::set_stule()
                      "   border: lpx solid #828282;"
                      "   border-radius: 3px"
                      "}");
+    ui->connect_button->setStyleSheet(
+                      "QPushButton{"
+                      "   color: #555555;"
+                      "   background-color: white;"
+                      "   border: lpx solid #828282;"
+                      "   border-radius: 3px"
+                      "}"
+                      ""
+                      "QPushButton:hover{"
+                      "   border: lpx solid #828282;"
+                      "   background-color: #d5d5d5;"
+                      "}"
+                      ""
+                      "QPushButton:hover:pressed{"
+                      "   background-color: gray;"
+                      "   color: white;"
+                      "}");
+    ui->tenso_calib->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
     ui->connect_button->setStyleSheet(
                       "QPushButton{"
                       "   color: #555555;"
@@ -327,21 +364,51 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
-//    ui->scrollArea->setObjectName( "scrollArea1" );
-//    ui->scrollArea->setStyleSheet(
-//                    "#scrollArea1{"
-//                    "   color: #555555;"
-//                    "   background-color: white;"
-//                    "   border-radius: 3px;"
-//                    "border: 1px solid #d5d5d5;"
-//                    "}"
-//                    );
+    ui->scrollArea->setObjectName( "scrollArea1" );
+    ui->scrollArea->setStyleSheet(
+                    "#scrollArea1{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border-radius: 3px;"
+                    "border: 1px solid #d5d5d5;"
+                    "}"
+                    );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
                 "border-radius: 3px;;"
-                "border-top-right-radius: 6px;"
                 "border: 1px solid #d5d5d5;"
+                "}"
+                );
+    ui->frame_2->setObjectName( "frame2" );
+    ui->frame_2->setStyleSheet(
+                "#frame2{"
+                "border-radius: 3px;"
+                "border-bottom-left-radius: 10px;"
+                "border-bottom-right-radius: 10px;"
+                "border: 1px solid #d5d5d5;"
+                "}"
+                );
+    ui->frame_3->setObjectName( "frame3" );
+    ui->frame_3->setStyleSheet(
+                "#frame3{"
+                "border-radius: 3px;"
+                "border: 1px solid #d5d5d5;"
+                "}"
+                );
+    ui->info_start->setStyleSheet(
+                "QLabel{"
+                "   color: #555555;"
+                "}"
+                );
+    ui->info_pause->setStyleSheet(
+                "QLabel{"
+                "   color: #555555;"
+                "}"
+                );
+    ui->info_stop->setStyleSheet(
+                "QLabel{"
+                "   color: #555555;"
                 "}"
                 );
 }
@@ -537,5 +604,24 @@ void MainWindow::on_connect_button_clicked()
 
     connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
 
-    ui->label->setText(QString::number(index) + " " + ui->selection_com_port->currentText());
+    qDebug()<<"Выбрали: "+ui->selection_com_port->currentText()+"Определился: " + serial->portName();
+
+    QString oldLable = ui->label->text();
+    ui->label->setText(QString::number(index) + " " + ui->selection_com_port->currentText()+ "\n");
 }
+
+void MainWindow::on_start_clicked()
+{
+//    QMessageBox::information(this, "start clicked", "\n"+ui->start->text()+" ______________________");
+}
+
+void MainWindow::on_pause_clicked()
+{
+//    QMessageBox::information(this, "pause clicked", "\n"+ui->pause->text()+" ______________________");
+}
+
+void MainWindow::on_stop_clicked()
+{
+//    QMessageBox::information(this, "stop clicked", "\n"+ui->stop->text()+" ______________________");
+}
+

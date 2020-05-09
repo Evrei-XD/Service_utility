@@ -25,6 +25,8 @@ private:
     QSerialPort *serial;
     QByteArray byteArrey;//массив байт
     QString serialBuffer;
+    QString productIdentifier;
+    QString vendorIdentifier;
 
 private slots:
     void serialRecieve();//получаем данные
@@ -35,6 +37,9 @@ private slots:
     void separateSecondByte (QString secondByte);
     void on_connect_button_clicked();
     void update_ui();
+    void on_start_clicked();
+    void on_pause_clicked();
+    void on_stop_clicked();
 };
 
 #endif // MAINWINDOW_H
