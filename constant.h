@@ -3,6 +3,7 @@
 
 static const int RECEIVE = 0;
 static const int SEND = 1;
+static const int TENSO_CALIB = 2;
 
 //Registers
 static const int MOVEMENT = 1;

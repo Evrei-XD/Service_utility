@@ -45,6 +45,10 @@ private slots:
     void on_send_shake_time_textChanged(const QString &arg1);
     void buffer_send_message();
     void send_message();
+    void on_send_cool_time_textChanged(const QString &arg1);
+    void on_send_stop_strength_textChanged(const QString &arg1);
+    void on_send_stop_current_textChanged(const QString &arg1);
+    void on_tenso_calib_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -79,7 +79,7 @@ MainWindow::~MainWindow()
 
 
 quint16 receiveVector[7];
-QString reseiveMessage = "<--- ";
+QString reseiveMessage = "";
 void MainWindow::serialRecieve()//получаем данные
 {
     byteArreyReceiveMessage = serial->readAll();//читаем всё
@@ -103,13 +103,11 @@ void MainWindow::serialRecieve()//получаем данные
     for(int i=0; i<byteArreyReceiveMessage.size(); i+=2)
     {
         receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
-        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(receiveVector[i/2]);
+//        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(receiveVector[i/2]);
     }
-//    serialBuffer = QString::fromStdString(byteArreyReceiveMessage.toStdString());
-//    qDebug() << serialBuffer;
-//    reseiveMessage += byteArreyReceiveMessage.toHex() + " ";
-//    QString oldLable = ui->label->text();
-//    ui->label->setText(oldLable + reseiveMessage +"\n");//QString::number(byteArrayMessage.count())
+    reseiveMessage = byteArreyReceiveMessage.toHex();
+    QString oldLable = ui->label->text();
+    ui->label->setText(oldLable+"<--- "+reseiveMessage +"\n");//QString::number(byteArrayMessage.count())
 }
 
 void MainWindow::on_send_message_clicked()
@@ -451,7 +449,7 @@ void MainWindow::update_ui()
 {
     if(sendFlag)
     {
-        //    serial->write("UPDATE");
+        serial->write("UPDATE");
         qDebug() << "UPDATE"<< timerUpdate.elapsed();
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
@@ -509,13 +507,134 @@ void MainWindow::on_send_shake_time_textChanged(const QString &arg1)
         timer.start();
         flagFirst = true;
         flagSecond = false;
-        for (int i=0; i<=PROSITY+20; i++)
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
         {
             byteArraySendMessage[0] = SEND;
             byteArraySendMessage[1] = SHAKE_TIME;
             byteArraySendMessage[2] = arg1.toInt()>>8;
             byteArraySendMessage[3] = arg1.toInt();
-              QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_send_cool_time_textChanged(const QString &arg1)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = COOL_TIME;
+            byteArraySendMessage[2] = arg1.toInt()>>8;
+            byteArraySendMessage[3] = arg1.toInt();
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_send_stop_strength_textChanged(const QString &arg1)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = STOP_STRENGHT;
+            byteArraySendMessage[2] = arg1.toInt()>>8;
+            byteArraySendMessage[3] = arg1.toInt();
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_send_stop_current_textChanged(const QString &arg1)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = STOP_CURRENT;
+            byteArraySendMessage[2] = arg1.toInt()>>8;
+            byteArraySendMessage[3] = arg1.toInt();
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_start_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = MOVEMENT;
+            byteArraySendMessage[2] = 1;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_pause_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = MOVEMENT;
+            byteArraySendMessage[2] = 2;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_stop_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = MOVEMENT;
+            byteArraySendMessage[2] = 3;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
+void MainWindow::on_tenso_calib_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = TENSO_CALIB;
+            byteArraySendMessage[1] = 0;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
         }
     }
 }
@@ -545,11 +664,41 @@ void MainWindow::buffer_send_message ()
 void MainWindow::send_message ()
 {
     qDebug() << "MESSAGE"<<timerUpdate.elapsed();
-    serial->write(byteArraySendMessage);
     timerUpdate.start();
     sendFlag = true;
     flagThird = true;
+    int temp = byteArraySendMessage[1];
+    int temp2 = byteArraySendMessage[0];
     QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
+    if(temp == 1)
+    {
+        QByteArray arrey;
+        arrey[0] = byteArraySendMessage[0];
+        arrey[1] = byteArraySendMessage[1];
+        arrey[2] = byteArraySendMessage[2];
+        serial->write(arrey);
+
+        QString oldLable = ui->label->text();
+        ui->label->setText(oldLable +
+                           "---> "+arrey.toHex() +"\n");
+    } else
+    {
+        if(temp2 == 2)
+        {
+            serial->write("TENSO_CALIB");
+
+            QString oldLable = ui->label->text();
+            ui->label->setText(oldLable +
+                               "---> "+"TENSO_CALIB" +"\n");
+        }else
+        {
+            serial->write(byteArraySendMessage);
+
+            QString oldLable = ui->label->text();
+            ui->label->setText(oldLable +
+                               "---> "+byteArraySendMessage.toHex() +"\n");
+        }
+    }
 }
 
 
@@ -695,7 +844,6 @@ void MainWindow::separateSecondByte (QString secondByte)
     }
 }
 
-
 void MainWindow::on_connect_button_clicked()
 {
     int index =  ui->selection_com_port->currentIndex();
@@ -715,33 +863,6 @@ void MainWindow::on_connect_button_clicked()
 
     QString oldLable = ui->label->text();
     ui->label->setText(QString::number(index) + " " + ui->selection_com_port->currentText()+ "\n");
-}
-
-void MainWindow::on_start_clicked()
-{
-    QByteArray byteArrayMessage;
-    byteArrayMessage[0] = SEND;
-    byteArrayMessage[1] = MOVEMENT;
-    byteArrayMessage[2] = 1;
-    serial->write(byteArrayMessage);
-}
-
-void MainWindow::on_pause_clicked()
-{
-    QByteArray byteArrayMessage;
-    byteArrayMessage[0] = SEND;
-    byteArrayMessage[1] = MOVEMENT;
-    byteArrayMessage[2] = 2;
-    serial->write(byteArrayMessage);
-}
-
-void MainWindow::on_stop_clicked()
-{
-    QByteArray byteArrayMessage;
-    byteArrayMessage[0] = SEND;
-    byteArrayMessage[1] = MOVEMENT;
-    byteArrayMessage[2] = 3;
-    serial->write(byteArrayMessage);
 }
 
 
