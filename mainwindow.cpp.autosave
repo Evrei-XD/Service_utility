@@ -120,6 +120,7 @@ void MainWindow::on_send_message_clicked()
     QByteArray byteArrayMessage=sendMessage.toLocal8Bit();
 
     sendBytes(ui->edit_line->text());
+    ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
 }
 
 void MainWindow::set_stule()
