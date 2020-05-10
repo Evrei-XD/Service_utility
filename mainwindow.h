@@ -23,10 +23,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QSerialPort *serial;
-    QByteArray byteArrey;//массив байт
+    QByteArray byteArreyReceiveMessage;
+    QByteArray byteArraySendMessage;
     QString serialBuffer;
     QString productIdentifier;
     QString vendorIdentifier;
+    bool sendFlag = true;
 
 private slots:
     void serialRecieve();//получаем данные
@@ -41,7 +43,8 @@ private slots:
     void on_pause_clicked();
     void on_stop_clicked();
     void on_send_shake_time_textChanged(const QString &arg1);
-    void print_log();
+    void buffer_send_message();
+    void send_message();
 };
 
 #endif // MAINWINDOW_H

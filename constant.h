@@ -11,4 +11,7 @@ static const int COOL_TIME = 3;
 static const int STOP_CURRENT = 4;
 static const int STOP_STRENGHT = 5;
 
+//
+static const int PROSITY = 1000;
+
 #endif // CONSTANT_H

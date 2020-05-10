@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QMessageBox>
 #include <QMessageBox>
@@ -61,8 +62,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
         if((info.hasProductIdentifier() || info.hasVendorIdentifier()))
         {
-            qDebug(logStend())<<info.productIdentifier();
-            qDebug(logStend())<<info.vendorIdentifier();
+            qDebug()<<info.productIdentifier();
+            qDebug()<<info.vendorIdentifier();
         }
     }
 }
@@ -76,57 +77,37 @@ MainWindow::~MainWindow()
     delete serial;
 }
 
+
 quint16 receiveVector[7];
-void MainWindow::update_ui()
-{
-    serial->write("UPDATE");
-    ui->receive_shakes_number->setText(QString::number(receiveVector[0]));
-    ui->receive_current->setText(QString::number(receiveVector[1]));
-    ui->receive_strength->setText(QString::number(receiveVector[2]));
-    ui->receive_shake_time->setText(QString::number(receiveVector[3]));
-    ui->receive_cool_time->setText(QString::number(receiveVector[4]));
-    ui->receive_stop_current->setText(QString::number(receiveVector[5]));
-    ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
-    QTimer::singleShot(1000, this, SLOT(update_ui()));
-
-
-
-//      time_t rawtime;
-//      struct tm * timeinfo;
-//      time ( &rawtime );
-//      timeinfo = localtime ( &rawtime );
-//      qDebug()<<"Текущее локальное время и дата: "+QDateTime::currentDateTime().toString("hh:mm:ss___dd.MM.yyyy");
-}
-
 QString reseiveMessage = "<--- ";
 void MainWindow::serialRecieve()//получаем данные
 {
-    byteArrey = serial->readAll();//читаем всё
-//    byteArrey[0] = 1;
-//    byteArrey[1] = 0;
-//    byteArrey[2] = 2;
-//    byteArrey[3] = 0;
-//    byteArrey[4] = 3;
-//    byteArrey[5] = 0;
-//    byteArrey[6] = 4;
-//    byteArrey[7] = 0;
-//    byteArrey[8] = 5;
-//    byteArrey[9] = 0;
-//    byteArrey[10] = 6;
-//    byteArrey[11] = 0;
-//    byteArrey[12] = 7;
-//    byteArrey[13] = 0;
-    QDataStream dataStream(byteArrey);
-    serialBuffer = byteArrey.toHex();
+    byteArreyReceiveMessage = serial->readAll();//читаем всё
+//    byteArreyReceiveMessage[0] = 1;
+//    byteArreyReceiveMessage[1] = 0;
+//    byteArreyReceiveMessage[2] = 2;
+//    byteArreyReceiveMessage[3] = 0;
+//    byteArreyReceiveMessage[4] = 3;
+//    byteArreyReceiveMessage[5] = 0;
+//    byteArreyReceiveMessage[6] = 4;
+//    byteArreyReceiveMessage[7] = 0;
+//    byteArreyReceiveMessage[8] = 5;
+//    byteArreyReceiveMessage[9] = 0;
+//    byteArreyReceiveMessage[10] = 6;
+//    byteArreyReceiveMessage[11] = 0;
+//    byteArreyReceiveMessage[12] = 7;
+//    byteArreyReceiveMessage[13] = 0;
+    QDataStream dataStream(byteArreyReceiveMessage);
+    serialBuffer = byteArreyReceiveMessage.toHex();
 
-    for(int i=0; i<byteArrey.size(); i+=2)
+    for(int i=0; i<byteArreyReceiveMessage.size(); i+=2)
     {
-        receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArrey.constData()+i));
+        receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
         qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(receiveVector[i/2]);
     }
-//    serialBuffer = QString::fromStdString(byteArrey.toStdString());
+//    serialBuffer = QString::fromStdString(byteArreyReceiveMessage.toStdString());
 //    qDebug() << serialBuffer;
-//    reseiveMessage += byteArrey.toHex() + " ";
+//    reseiveMessage += byteArreyReceiveMessage.toHex() + " ";
 //    QString oldLable = ui->label->text();
 //    ui->label->setText(oldLable + reseiveMessage +"\n");//QString::number(byteArrayMessage.count())
 }
@@ -464,6 +445,26 @@ void MainWindow::set_stule()
                 );
 }
 
+QElapsedTimer timerUpdate;
+
+void MainWindow::update_ui()
+{
+    if(sendFlag)
+    {
+        //    serial->write("UPDATE");
+        qDebug() << "UPDATE"<< timerUpdate.elapsed();
+        QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
+        timerUpdate.start();
+    }
+    ui->receive_shakes_number->setText(QString::number(receiveVector[0]));
+    ui->receive_current->setText(QString::number(receiveVector[1]));
+    ui->receive_strength->setText(QString::number(receiveVector[2]));
+    ui->receive_shake_time->setText(QString::number(receiveVector[3]));
+    ui->receive_cool_time->setText(QString::number(receiveVector[4]));
+    ui->receive_stop_current->setText(QString::number(receiveVector[5]));
+    ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+}
+
 QString formatedEditLine = "";
 QString odin = "0";
 void MainWindow::on_edit_line_textChanged(const QString &arg1)
@@ -497,29 +498,60 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
 
 }
 
-
+QElapsedTimer timer;
+bool flagFirst = false;
+bool flagSecond = false;
+bool flagThird = true;
 void MainWindow::on_send_shake_time_textChanged(const QString &arg1)
 {
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=0; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = SHAKE_TIME;
+            byteArraySendMessage[2] = arg1.toInt()>>8;
+            byteArraySendMessage[3] = arg1.toInt();
+              QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
 
-      for (int i=0; i<=20; i++)
-      {
-          QTimer::singleShot(i*1000, this, SLOT(print_log()));
-      }
-//    int number = arg1.toInt();
-//    qDebug()<<QString::number(number);
-//    timer->stop();
-//    connect(timer, SIGNAL(timeout()), this, SLOT(print_log()));
-//    QTimer::singleShot(1000, this, SLOT(update_ui()));
-//    timer->start(1000);
-}
-void MainWindow::print_log ()
+void MainWindow::buffer_send_message ()
 {
-    time_t rawtime;
-    struct tm * timeinfo;
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-    qDebug()<<asctime(timeinfo);
+    if (timer.elapsed()>=PROSITY)
+    {
+        flagSecond = true;
+    }
+    if(flagSecond && flagFirst)
+    {
+        sendFlag = false;
+        flagFirst = false;
+        flagSecond = false;
+        flagThird = false;
+        if(PROSITY-timerUpdate.elapsed()+20>=0)
+        {
+            QTimer::singleShot(PROSITY-timerUpdate.elapsed()+20, this, SLOT(send_message()));
+        }else
+        {
+            QTimer::singleShot(0, this, SLOT(send_message()));
+        }
+    }
 }
+
+void MainWindow::send_message ()
+{
+    qDebug() << "MESSAGE"<<timerUpdate.elapsed();
+    serial->write(byteArraySendMessage);
+    timerUpdate.start();
+    sendFlag = true;
+    flagThird = true;
+    QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
+}
+
 
 int sendByte = 0;
 void MainWindow::sendBytes (QString arg1)
