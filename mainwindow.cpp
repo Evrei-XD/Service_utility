@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    QObject::connect(send_message,SIGNAL(clicked(bool)),this,SLOT(slot_send_text()));
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM4");//указали com-порт
+    serial->setPortName("COM1");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -453,7 +453,10 @@ void MainWindow::update_ui()
 {
     if(sendFlag)
     {
-        serial->write("UPDATE");
+//        serial->write("UPDATE");
+        QByteArray byteArrayMessage;
+        byteArrayMessage[0] = 0;
+        serial->write(byteArrayMessage);
         qDebug() << "UPDATE"<< timerUpdate.elapsed();
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
@@ -747,6 +750,7 @@ void MainWindow::sendBytes (QString arg1)
     QString oldLable = ui->label->text();
     ui->label->setText(oldLable +
                        "---> "+formatedEditLine +"\n");//QString::number(byteArrayMessage.count())
+    ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
 }
 
 void MainWindow::separateSecondByte (QString secondByte)
