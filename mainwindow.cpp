@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     set_stule();
-    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     serialBuffer = "";
     productIdentifier = "";
     vendorIdentifier = "";
@@ -37,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
 //    }
 
 //    ui->edit_line->setText("f0 ab 1d");
-//    QObject::connect(send_message,SIGNAL(clicked(bool)),this,SLOT(slot_send_text()));
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
     serial->setPortName("COM1");//указали com-порт
@@ -109,9 +107,6 @@ void MainWindow::serialRecieve()//получаем данные
 //        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(receiveVector[i/2]);
     }
     reseiveMessage = byteArreyReceiveMessage.toHex();
-    QString oldLable = ui->label->text();
-    ui->label->setText(oldLable+"<--- "+reseiveMessage +"\n");//QString::number(byteArrayMessage.count())
-    ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
 }
 
 void MainWindow::on_send_message_clicked()
@@ -413,15 +408,6 @@ void MainWindow::set_stule()
                 "   color: #555555;"
                 "}"
                 );
-    ui->scrollArea->setObjectName( "scrollArea1" );
-    ui->scrollArea->setStyleSheet(
-                    "#scrollArea1{"
-                    "   color: #555555;"
-                    "   background-color: white;"
-                    "   border-radius: 3px;"
-                    "border: 1px solid #d5d5d5;"
-                    "}"
-                    );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
@@ -457,7 +443,7 @@ void MainWindow::update_ui()
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
         serial->write(byteArrayMessage);
-        qDebug() << "UPDATE"<< timerUpdate.elapsed();
+//        qDebug() << "UPDATE"<< timerUpdate.elapsed();
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -684,29 +670,14 @@ void MainWindow::send_message ()
         arrey[1] = byteArraySendMessage[1];
         arrey[2] = byteArraySendMessage[2];
         serial->write(arrey);
-
-        QString oldLable = ui->label->text();
-        ui->label->setText(oldLable +
-                           "---> "+arrey.toHex() +"\n");
-        ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
     } else
     {
         if(temp2 == 2)
         {
             serial->write("TENSO_CALIB");
-
-            QString oldLable = ui->label->text();
-            ui->label->setText(oldLable +
-                               "---> "+"TENSO_CALIB" +"\n");
-            ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
         }else
         {
             serial->write(byteArraySendMessage);
-
-            QString oldLable = ui->label->text();
-            ui->label->setText(oldLable +
-                               "---> "+byteArraySendMessage.toHex() +"\n");
-            ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
         }
     }
 }
@@ -746,11 +717,6 @@ void MainWindow::sendBytes (QString arg1)
         if(firstChar == "e") {sendByte = 14 * 16; separateSecondByte(secondChar);}
         if(firstChar == "f") {sendByte = 15 * 16; separateSecondByte(secondChar);}
     }
-
-    QString oldLable = ui->label->text();
-    ui->label->setText(oldLable +
-                       "---> "+formatedEditLine +"\n");//QString::number(byteArrayMessage.count())
-    ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->label->height());
 }
 
 void MainWindow::separateSecondByte (QString secondByte)
@@ -857,8 +823,6 @@ void MainWindow::separateSecondByte (QString secondByte)
 
 void MainWindow::on_connect_button_clicked()
 {
-    int index =  ui->selection_com_port->currentIndex();
-
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
     serial->setPortName(ui->selection_com_port->currentText());//указали com-порт и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
@@ -871,7 +835,4 @@ void MainWindow::on_connect_button_clicked()
     connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
 
     qDebug()<<"Выбрали: "+ui->selection_com_port->currentText()+"Определился: " + serial->portName();
-
-    QString oldLable = ui->label->text();
-    ui->label->setText(QString::number(index) + " " + ui->selection_com_port->currentText()+ "\n");
 }
