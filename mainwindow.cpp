@@ -223,6 +223,57 @@ void MainWindow::set_stule()
                       "   background-color: gray;"
                       "   color: white;"
                       "}");
+    ui->start->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
+    ui->pause->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
+    ui->stop->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
     ui->selection_com_port->setStyleSheet(
                     "QComboBox {"
                     "   color: #555555;"
@@ -393,21 +444,6 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
-    ui->info_start->setStyleSheet(
-                "QLabel{"
-                "   color: #555555;"
-                "}"
-                );
-    ui->info_pause->setStyleSheet(
-                "QLabel{"
-                "   color: #555555;"
-                "}"
-                );
-    ui->info_stop->setStyleSheet(
-                "QLabel{"
-                "   color: #555555;"
-                "}"
-                );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
