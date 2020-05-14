@@ -29,6 +29,8 @@ private:
     QString productIdentifier;
     QString vendorIdentifier;
     bool sendFlag = true;
+    int maxCurrent = 0;
+    int maxStrength = 0;
 
 private slots:
     void serialRecieve();//получаем данные

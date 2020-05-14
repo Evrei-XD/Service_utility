@@ -84,27 +84,12 @@ QString reseiveMessage = "";
 void MainWindow::serialRecieve()//получаем данные
 {
     byteArreyReceiveMessage = serial->readAll();//читаем всё
-//    byteArreyReceiveMessage[0] = 1;
-//    byteArreyReceiveMessage[1] = 0;
-//    byteArreyReceiveMessage[2] = 2;
-//    byteArreyReceiveMessage[3] = 0;
-//    byteArreyReceiveMessage[4] = 3;
-//    byteArreyReceiveMessage[5] = 0;
-//    byteArreyReceiveMessage[6] = 4;
-//    byteArreyReceiveMessage[7] = 0;
-//    byteArreyReceiveMessage[8] = 5;
-//    byteArreyReceiveMessage[9] = 0;
-//    byteArreyReceiveMessage[10] = 6;
-//    byteArreyReceiveMessage[11] = 0;
-//    byteArreyReceiveMessage[12] = 7;
-//    byteArreyReceiveMessage[13] = 0;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
     for(int i=0; i<byteArreyReceiveMessage.size(); i+=2)
     {
         receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
-//        qDebug() << "int" + QString::number(i/2) + " = "+ QString::number(receiveVector[i/2]);
     }
     reseiveMessage = byteArreyReceiveMessage.toHex();
 }
@@ -444,6 +429,26 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_current_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_strength_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_current_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_strength_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
@@ -484,11 +489,9 @@ void MainWindow::update_ui()
 {
     if(sendFlag)
     {
-//        serial->write("UPDATE");
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
         serial->write(byteArrayMessage);
-//        qDebug() << "UPDATE"<< timerUpdate.elapsed();
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -499,6 +502,16 @@ void MainWindow::update_ui()
     ui->receive_cool_time->setText(QString::number(receiveVector[4]));
     ui->receive_stop_current->setText(QString::number(receiveVector[5]));
     ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+    if(maxCurrent <= receiveVector[1])
+    {
+        ui->receive_current_max->setText(QString::number(receiveVector[1]));
+        maxCurrent = receiveVector[1];
+    }
+    if(maxStrength <= receiveVector[2])
+    {
+        ui->receive_strength_max->setText(QString::number(receiveVector[2]));
+        maxStrength = receiveVector[2];
+    }
 }
 
 QString formatedEditLine = "";
