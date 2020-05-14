@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 //#define RECEIVE_VARIABLES =
 
-
+#include <QFile>
 #include <QMainWindow>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
@@ -28,9 +28,12 @@ private:
     QString serialBuffer;
     QString productIdentifier;
     QString vendorIdentifier;
+//    QFile fileLog;
     bool sendFlag = true;
     int maxCurrent = 0;
     int maxStrength = 0;
+    int printCurrent = 2;
+    int printStrenght = 3;
 
 private slots:
     void serialRecieve();//получаем данные
@@ -51,6 +54,7 @@ private slots:
     void on_send_stop_strength_textChanged(const QString &arg1);
     void on_send_stop_current_textChanged(const QString &arg1);
     void on_tenso_calib_clicked();
+    void writeToFileLog();
 };
 
 #endif // MAINWINDOW_H

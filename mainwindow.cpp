@@ -8,7 +8,6 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
 #include <QElapsedTimer>
-#include <QFile>
 #include <QMessageBox>
 #include <QMessageBox>
 #include <QPushButton>
@@ -17,8 +16,11 @@
 #include <QString>
 #include <QTimer>
 #include <QtEndian>
-#include <qmessagebox.h>
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
 
+QFile fileLog("Log/Log__"+QDateTime::currentDateTime().toString("hh-mm-ss  dd.MM.yyyy") + ".txt");
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -28,12 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     serialBuffer = "";
     productIdentifier = "";
     vendorIdentifier = "";
-    QString logName = "Log_"+QDateTime::currentDateTime().toString("hh:mm:ss___dd.MM.yyyy") + ".txt";
-//    QFile file(logName);
-//    if (file.open(QIODevice::WriteOnly | QIODevice::Append)) {
-//        file.write("blablabla");
-//        file.close();
-//    }
+    QDir().mkdir("Log");
 
 //    ui->edit_line->setText("f0 ab 1d");
 
@@ -484,7 +481,7 @@ void MainWindow::set_stule()
 }
 
 QElapsedTimer timerUpdate;
-
+int oldShakeNumber = 0;
 void MainWindow::update_ui()
 {
     if(sendFlag)
@@ -502,6 +499,7 @@ void MainWindow::update_ui()
     ui->receive_cool_time->setText(QString::number(receiveVector[4]));
     ui->receive_stop_current->setText(QString::number(receiveVector[5]));
     ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+
     if(maxCurrent <= receiveVector[1])
     {
         ui->receive_current_max->setText(QString::number(receiveVector[1]));
@@ -512,10 +510,18 @@ void MainWindow::update_ui()
         ui->receive_strength_max->setText(QString::number(receiveVector[2]));
         maxStrength = receiveVector[2];
     }
+    if((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0))
+    {
+        writeToFileLog();
+        printCurrent = 0;
+        printStrenght = 0;
+    }
+    if(printCurrent < receiveVector[1]){printCurrent = receiveVector[1];}
+    if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
+    oldShakeNumber = receiveVector[0];
 }
 
 QString formatedEditLine = "";
-QString odin = "0";
 void MainWindow::on_edit_line_textChanged(const QString &arg1)
 {
     int size=arg1.size();
@@ -530,7 +536,6 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
     if (    ((byteArrayMessage >= "0") && (byteArrayMessage <= "9")) || (byteArrayMessage == "a") || (byteArrayMessage == "b") ||
             (byteArrayMessage == "c") || (byteArrayMessage == "d") || (byteArrayMessage == "e") ||
             (byteArrayMessage == "f") || (byteArrayMessage == " ") || (byteArrayMessage == "")){
-        odin = "1";
         QString string = arg1;
         string.chop(1);
         if(string == " ")
@@ -541,7 +546,6 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
         QString string = arg1;
         string.chop(1);
         ui->edit_line->setText(string);
-        odin = "0";
     }
 
 
@@ -568,7 +572,6 @@ void MainWindow::on_send_shake_time_textChanged(const QString &arg1)
         }
     }
 }
-
 void MainWindow::on_send_cool_time_textChanged(const QString &arg1)
 {
     if(flagThird)
@@ -586,7 +589,6 @@ void MainWindow::on_send_cool_time_textChanged(const QString &arg1)
         }
     }
 }
-
 void MainWindow::on_send_stop_strength_textChanged(const QString &arg1)
 {
     if(flagThird)
@@ -604,7 +606,6 @@ void MainWindow::on_send_stop_strength_textChanged(const QString &arg1)
         }
     }
 }
-
 void MainWindow::on_send_stop_current_textChanged(const QString &arg1)
 {
     if(flagThird)
@@ -622,7 +623,6 @@ void MainWindow::on_send_stop_current_textChanged(const QString &arg1)
         }
     }
 }
-
 void MainWindow::on_start_clicked()
 {
     if(flagThird)
@@ -639,7 +639,6 @@ void MainWindow::on_start_clicked()
         }
     }
 }
-
 void MainWindow::on_pause_clicked()
 {
     if(flagThird)
@@ -656,7 +655,6 @@ void MainWindow::on_pause_clicked()
         }
     }
 }
-
 void MainWindow::on_stop_clicked()
 {
     if(flagThird)
@@ -673,7 +671,6 @@ void MainWindow::on_stop_clicked()
         }
     }
 }
-
 void MainWindow::on_tenso_calib_clicked()
 {
     if(flagThird)
@@ -689,7 +686,6 @@ void MainWindow::on_tenso_calib_clicked()
         }
     }
 }
-
 void MainWindow::buffer_send_message ()
 {
     if (timer.elapsed()>=PROSITY)
@@ -711,7 +707,6 @@ void MainWindow::buffer_send_message ()
         }
     }
 }
-
 void MainWindow::send_message ()
 {
     qDebug() << "MESSAGE"<<timerUpdate.elapsed();
@@ -739,6 +734,8 @@ void MainWindow::send_message ()
         }
     }
 }
+
+
 
 
 int sendByte = 0;
@@ -776,7 +773,6 @@ void MainWindow::sendBytes (QString arg1)
         if(firstChar == "f") {sendByte = 15 * 16; separateSecondByte(secondChar);}
     }
 }
-
 void MainWindow::separateSecondByte (QString secondByte)
 {
     QByteArray byteArrayMessage;
@@ -879,6 +875,8 @@ void MainWindow::separateSecondByte (QString secondByte)
     }
 }
 
+
+
 void MainWindow::on_connect_button_clicked()
 {
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
@@ -894,3 +892,20 @@ void MainWindow::on_connect_button_clicked()
 
     qDebug()<<"Выбрали: "+ui->selection_com_port->currentText()+"Определился: " + serial->portName();
 }
+
+
+QTextStream stream (&fileLog);
+QString buffer = "";
+void MainWindow::writeToFileLog()
+{
+    if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        buffer = stream.readAll();
+//        qDebug() << buffer + "№" + QString::number(oldShakeNumber)+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght);
+        stream <<"№" + QString::number(oldShakeNumber)+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) +"\n";
+//        fileLog.write("№%1     \n",oldShakeNumber);
+        fileLog.close();
+    }
+}
+
+
