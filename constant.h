@@ -13,6 +13,6 @@ static const int STOP_CURRENT = 4;
 static const int STOP_STRENGHT = 5;
 
 //
-static const int PROSITY = 20;
+static const int PROSITY = 30;
 
 #endif // CONSTANT_H

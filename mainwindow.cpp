@@ -492,7 +492,7 @@ void MainWindow::update_ui()
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
-    ui->receive_shakes_number->setText(QString::number(receiveVector[0]));
+    ui->receive_shakes_number->setText(QString::number((65535 * cycleMultiplier)+receiveVector[0]));
     ui->receive_current->setText(QString::number(receiveVector[1]));
     ui->receive_strength->setText(QString::number(receiveVector[2]));
     ui->receive_shake_time->setText(QString::number(receiveVector[3]));
@@ -510,7 +510,7 @@ void MainWindow::update_ui()
         ui->receive_strength_max->setText(QString::number(receiveVector[2]));
         maxStrength = receiveVector[2];
     }
-    if((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0))
+    if(((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
     {
         writeToFileLog();
         printCurrent = 0;
@@ -519,6 +519,11 @@ void MainWindow::update_ui()
     if(printCurrent < receiveVector[1]){printCurrent = receiveVector[1];}
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
     oldShakeNumber = receiveVector[0];
+    if(receiveVector[0] == 65535)
+    {
+        cycleMultiplier++;
+        receiveVector[0] = 1;
+    }
 }
 
 QString formatedEditLine = "";
@@ -900,10 +905,8 @@ void MainWindow::writeToFileLog()
 {
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        buffer = stream.readAll();
-//        qDebug() << buffer + "№" + QString::number(oldShakeNumber)+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght);
-        stream <<"№" + QString::number(oldShakeNumber)+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) +"\n";
-//        fileLog.write("№%1     \n",oldShakeNumber);
+        stream.readAll();
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) + "       Время: "+QDateTime::currentDateTime().toString("hh-mm-ss")+"\n";
         fileLog.close();
     }
 }
