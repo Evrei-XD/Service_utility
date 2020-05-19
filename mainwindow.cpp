@@ -79,6 +79,7 @@ QElapsedTimer timerGrip;
 quint16 receiveVector[7];
 QString reseiveMessage = "";
 bool flagIdlingCompression = true; //правдив пока рука сжимается на холостом ходу
+bool flagStartTimerGrip = true;
 int numberOfIdleCurrentValues = 0;
 int sumCurrent = 0;
 void MainWindow::serialRecieve()//получаем данные
@@ -91,14 +92,17 @@ void MainWindow::serialRecieve()//получаем данные
     {
         receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
     }
-//    reseiveMessage = byteArreyReceiveMessage.toHex();
     if(flagIdlingCompression)
     {
         sumCurrent += receiveVector[1];
         numberOfIdleCurrentValues++;
         printCurrent = sumCurrent/numberOfIdleCurrentValues;
-        qDebug() << QString::number(sumCurrent)+":"+QString::number(numberOfIdleCurrentValues)+"="+QString::number(printCurrent);
         ui->receive_current_max->setText(QString::number(printCurrent));
+        if(flagStartTimerGrip)
+        {
+            timerGrip.start();
+            flagStartTimerGrip = false;
+        }
     }
 
 }
@@ -524,6 +528,7 @@ void MainWindow::update_ui()
         flagIdlingCompression = true;
         numberOfIdleCurrentValues = 0;
         sumCurrent = 0;
+        flagStartTimerGrip = true;
     }
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
     if(printStrenght != 0){flagIdlingCompression = false;}
@@ -915,7 +920,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) + "       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Время сжатия:"+QString::number(timerGrip.elapsed())+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
         fileLog.close();
     }
 }
