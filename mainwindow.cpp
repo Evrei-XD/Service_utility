@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM1");//указали com-порт
+    serial->setPortName("COM3");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -75,9 +75,12 @@ MainWindow::~MainWindow()
     delete serial;
 }
 
-
+QElapsedTimer timerGrip;
 quint16 receiveVector[7];
 QString reseiveMessage = "";
+bool flagIdlingCompression = true; //правдив пока рука сжимается на холостом ходу
+int numberOfIdleCurrentValues = 0;
+int sumCurrent = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
     byteArreyReceiveMessage = serial->readAll();//читаем всё
@@ -88,7 +91,16 @@ void MainWindow::serialRecieve()//получаем данные
     {
         receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
     }
-    reseiveMessage = byteArreyReceiveMessage.toHex();
+//    reseiveMessage = byteArreyReceiveMessage.toHex();
+    if(flagIdlingCompression)
+    {
+        sumCurrent += receiveVector[1];
+        numberOfIdleCurrentValues++;
+        printCurrent = sumCurrent/numberOfIdleCurrentValues;
+        qDebug() << QString::number(sumCurrent)+":"+QString::number(numberOfIdleCurrentValues)+"="+QString::number(printCurrent);
+        ui->receive_current_max->setText(QString::number(printCurrent));
+    }
+
 }
 
 void MainWindow::on_send_message_clicked()
@@ -481,6 +493,7 @@ void MainWindow::set_stule()
 }
 
 QElapsedTimer timerUpdate;
+//bool flagIdlingCompression = false;
 int oldShakeNumber = 0;
 void MainWindow::update_ui()
 {
@@ -500,16 +513,20 @@ void MainWindow::update_ui()
     ui->receive_stop_current->setText(QString::number(receiveVector[5]));
     ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
 
+
     if(((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
     {
         writeToFileLog();
-        ui->receive_current_max->setText(QString::number(printCurrent));
+//        ui->receive_current_max->setText(QString::number(printCurrent));
         ui->receive_strength_max->setText(QString::number(printStrenght));
         printCurrent = 0;
         printStrenght = 0;
+        flagIdlingCompression = true;
+        numberOfIdleCurrentValues = 0;
+        sumCurrent = 0;
     }
-    if(printCurrent < receiveVector[1]){printCurrent = receiveVector[1];}
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
+    if(printStrenght != 0){flagIdlingCompression = false;}
     oldShakeNumber = receiveVector[0];
     if(receiveVector[0] == 65535)
     {
@@ -898,7 +915,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) + "       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) + "       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
         fileLog.close();
     }
 }

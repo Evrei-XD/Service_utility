@@ -393,7 +393,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>190</x>
        <y>120</y>
        <width>51</width>
        <height>21</height>
@@ -471,7 +471,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>190</x>
        <y>60</y>
        <width>51</width>
        <height>21</height>
@@ -510,7 +510,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>190</x>
        <y>80</y>
        <width>51</width>
        <height>21</height>
@@ -642,7 +642,7 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>190</x>
         <y>40</y>
         <width>41</width>
         <height>21</height>
@@ -681,7 +681,7 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>190</x>
         <y>20</y>
         <width>41</width>
         <height>21</height>
@@ -1032,9 +1032,9 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>220</x>
         <y>20</y>
-        <width>21</width>
+        <width>51</width>
         <height>21</height>
        </rect>
       </property>
@@ -1059,7 +1059,7 @@
        <enum>Qt::LeftToRight</enum>
       </property>
       <property name="text">
-       <string>пик:</string>
+       <string>средняя:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
