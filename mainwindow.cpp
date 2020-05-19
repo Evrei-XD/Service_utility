@@ -500,19 +500,11 @@ void MainWindow::update_ui()
     ui->receive_stop_current->setText(QString::number(receiveVector[5]));
     ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
 
-    if(maxCurrent <= receiveVector[1])
-    {
-        ui->receive_current_max->setText(QString::number(receiveVector[1]));
-        maxCurrent = receiveVector[1];
-    }
-    if(maxStrength <= receiveVector[2])
-    {
-        ui->receive_strength_max->setText(QString::number(receiveVector[2]));
-        maxStrength = receiveVector[2];
-    }
     if(((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
     {
         writeToFileLog();
+        ui->receive_current_max->setText(QString::number(printCurrent));
+        ui->receive_strength_max->setText(QString::number(printStrenght));
         printCurrent = 0;
         printStrenght = 0;
     }
@@ -906,7 +898,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) + "       Время: "+QDateTime::currentDateTime().toString("hh:mm")+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Максимальный ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght) + "       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
         fileLog.close();
     }
 }

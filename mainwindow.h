@@ -29,10 +29,8 @@ private:
     QString productIdentifier;
     QString vendorIdentifier;
     bool sendFlag = true;
-    int maxCurrent = 0;
-    int maxStrength = 0;
-    int printCurrent = 2;
-    int printStrenght = 3;
+    int printCurrent = 0;
+    int printStrenght = 0;
     int cycleMultiplier = 0;//необходим для продолжения счёта после превышения 65534 циклов(увеличивается на 1 с каждым циклом)
 
 private slots:
