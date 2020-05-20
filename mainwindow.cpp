@@ -82,6 +82,7 @@ bool flagIdlingCompression = true; //правдив пока рука сжима
 bool flagStartTimerGrip = true;
 int numberOfIdleCurrentValues = 0;
 int sumCurrent = 0;
+int timeOfIdleGrip = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
     byteArreyReceiveMessage = serial->readAll();//читаем всё
@@ -103,6 +104,7 @@ void MainWindow::serialRecieve()//получаем данные
             timerGrip.start();
             flagStartTimerGrip = false;
         }
+        timeOfIdleGrip = timerGrip.elapsed();
     }
 
 }
@@ -529,6 +531,7 @@ void MainWindow::update_ui()
         numberOfIdleCurrentValues = 0;
         sumCurrent = 0;
         flagStartTimerGrip = true;
+        timeOfIdleGrip = 0;
     }
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
     if(printStrenght != 0){flagIdlingCompression = false;}
@@ -920,7 +923,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Время сжатия:"+QString::number(timerGrip.elapsed())+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
         fileLog.close();
     }
 }
