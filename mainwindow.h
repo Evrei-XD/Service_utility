@@ -53,6 +53,9 @@ private slots:
     void on_send_stop_current_textChanged(const QString &arg1);
     void on_tenso_calib_clicked();
     void writeToFileLog();
+    void on_open_clicked();
+    void on_close_clicked();
+    void on_invert_clicked();
 };
 
 #endif // MAINWINDOW_H

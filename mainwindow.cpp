@@ -274,6 +274,40 @@ void MainWindow::set_stule()
                     "   background-color: gray;"
                     "   color: white;"
                     "}");
+    ui->open->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
+    ui->close->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
     ui->selection_com_port->setStyleSheet(
                     "QComboBox {"
                     "   color: #555555;"
@@ -316,10 +350,10 @@ void MainWindow::set_stule()
                     "    border-bottom-right-radius: 3px;"
                     "}"
                     ""
-//                    "QComboBox::down-arrow {"
-//                    "    image: url(:/resource/icons/16x16/1downarrow.png);"
-//                    "}"
-//                    ""
+                    "QComboBox::down-arrow {"
+                    "    image: url(:/resource/icons/16x16/down-arrow3.png);"
+                    "}"
+                    ""
                     "QComboBox::down-arrow:on {" /* shift the arrow when popup is open */
                     "    top: 1px;"
                     "    left: 1px;"
@@ -464,10 +498,45 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_com_port_9->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_10->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_temperature->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_noise_level->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_21->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_22->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
-                "border-radius: 3px;;"
+                "border-radius: 3px;"
                 "border: 1px solid #d5d5d5;"
                 "}"
                 );
@@ -507,7 +576,7 @@ void MainWindow::update_ui()
     {
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
-        serial->write(byteArrayMessage);
+//        serial->write(byteArrayMessage);
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -708,6 +777,73 @@ void MainWindow::on_tenso_calib_clicked()
         }
     }
 }
+void MainWindow::on_open_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = SINGLE_MOVEMENT;
+            byteArraySendMessage[2] = OPEN;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+
+}
+void MainWindow::on_close_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = SINGLE_MOVEMENT;
+            byteArraySendMessage[2] = CLOSE;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+void MainWindow::on_invert_clicked()
+{
+    if(ui->invert->isChecked())
+    {
+        if(flagThird)
+        {
+            timer.start();
+            flagFirst = true;
+            flagSecond = false;
+            for (int i=PROSITY-10; i<=PROSITY+20; i++)
+            {
+                byteArraySendMessage[0] = SEND;
+                byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                byteArraySendMessage[2] = INVERT;
+                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            }
+        }
+    } else
+    {
+        if(flagThird)
+        {
+            timer.start();
+            flagFirst = true;
+            flagSecond = false;
+            for (int i=PROSITY-10; i<=PROSITY+20; i++)
+            {
+                byteArraySendMessage[0] = SEND;
+                byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                byteArraySendMessage[2] = CANCEL_INVERT;
+                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            }
+        }
+    }
+}
 void MainWindow::buffer_send_message ()
 {
     if (timer.elapsed()>=PROSITY)
@@ -738,8 +874,8 @@ void MainWindow::send_message ()
     int temp = byteArraySendMessage[1];
     int temp2 = byteArraySendMessage[0];
     QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
-    if(temp == 1)
-    {
+    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT)
+    {   
         QByteArray arrey;
         arrey[0] = byteArraySendMessage[0];
         arrey[1] = byteArraySendMessage[1];
@@ -747,12 +883,22 @@ void MainWindow::send_message ()
         serial->write(arrey);
     } else
     {
-        if(temp2 == 2)
+        if(temp == SHAKE_TIME || temp == COOL_TIME || temp == STOP_CURRENT || temp == STOP_STRENGHT)
         {
-            serial->write("TENSO_CALIB");
-        }else
-        {
-            serial->write(byteArraySendMessage);
+            QByteArray arrey;
+            arrey[0] = byteArraySendMessage[0];
+            arrey[1] = byteArraySendMessage[1];
+            arrey[2] = byteArraySendMessage[2];
+            arrey[3] = byteArraySendMessage[3];
+            serial->write(arrey);
+        } else {
+            if(temp2 == 2)
+            {
+                serial->write("TENSO_CALIB");
+            }else
+            {
+                serial->write(byteArraySendMessage);
+            }
         }
     }
 }
@@ -927,5 +1073,3 @@ void MainWindow::writeToFileLog()
         fileLog.close();
     }
 }
-
-

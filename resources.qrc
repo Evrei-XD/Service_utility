@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/resource">
         <file>icons/16x16/1downarrow.png</file>
+        <file>icons/16x16/down-arrow.png</file>
+        <file>icons/16x16/down-arrow2.png</file>
+        <file>icons/16x16/down-arrow3.png</file>
     </qresource>
 </RCC>

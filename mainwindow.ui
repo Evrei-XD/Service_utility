@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>269</height>
+    <width>651</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -183,7 +183,7 @@
       <x>10</x>
       <y>70</y>
       <width>311</width>
-      <height>151</height>
+      <height>181</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -199,7 +199,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>120</y>
+       <y>160</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -238,7 +238,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>60</y>
+       <y>100</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -277,7 +277,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>120</y>
+       <y>160</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -316,7 +316,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>100</y>
+       <y>140</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -355,7 +355,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>60</y>
+       <y>100</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -394,7 +394,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>120</y>
+       <y>160</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -433,7 +433,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>80</y>
+       <y>120</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -472,7 +472,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>60</y>
+       <y>100</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -511,7 +511,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>80</y>
+       <y>120</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -550,7 +550,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>100</y>
+       <y>140</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -589,7 +589,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>80</y>
+       <y>120</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -627,7 +627,7 @@
        <x>0</x>
        <y>0</y>
        <width>311</width>
-       <height>61</height>
+       <height>101</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -903,7 +903,7 @@
        <enum>Qt::LeftToRight</enum>
       </property>
       <property name="text">
-       <string>0001</string>
+       <string>0000</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1104,6 +1104,240 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="info_com_port_9">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>141</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Температура:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_com_port_10">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>80</y>
+        <width>141</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Уровень шума:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="receive_temperature">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>60</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>0000</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="receive_noise_level">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>80</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>0000</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_com_port_21">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>60</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>°C</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="info_com_port_22">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>80</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Symbol</family>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>дБ</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_3">
@@ -1112,7 +1346,7 @@
       <x>330</x>
       <y>70</y>
       <width>311</width>
-      <height>151</height>
+      <height>181</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -1127,7 +1361,7 @@
        <x>0</x>
        <y>0</y>
        <width>311</width>
-       <height>41</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -1175,12 +1409,73 @@
        <string>Стоп</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="open">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Открытие</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="close">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>40</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Закрытие</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="invert">
+      <property name="geometry">
+       <rect>
+        <x>149</x>
+        <y>50</y>
+        <width>21</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_invert">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>29</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Инверсия</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QLineEdit" name="send_shake_time">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>70</y>
+       <y>100</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1190,7 +1485,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>70</y>
+       <y>100</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1200,7 +1495,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>120</y>
+       <y>150</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1210,7 +1505,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>120</y>
+       <y>150</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1223,7 +1518,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>80</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1262,7 +1557,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>50</y>
+       <y>80</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1301,7 +1596,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>100</y>
+       <y>130</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1340,7 +1635,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>100</y>
+       <y>130</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -1403,7 +1698,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>650</width>
+     <width>651</width>
      <height>21</height>
     </rect>
    </property>
