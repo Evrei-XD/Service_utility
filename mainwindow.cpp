@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM3");//указали com-порт
+    serial->setPortName("COM5");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -76,16 +76,34 @@ MainWindow::~MainWindow()
 }
 
 QElapsedTimer timerGrip;
-quint16 receiveVector[7];
+quint16 receiveVector[8];
 QString reseiveMessage = "";
 bool flagIdlingCompression = true; //правдив пока рука сжимается на холостом ходу
 bool flagStartTimerGrip = true;
 int numberOfIdleCurrentValues = 0;
 int sumCurrent = 0;
 int timeOfIdleGrip = 0;
+int prilog = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
+    prilog++;
     byteArreyReceiveMessage = serial->readAll();//читаем всё
+    byteArreyReceiveMessage[0] = 0;
+    byteArreyReceiveMessage[1] = prilog;
+    byteArreyReceiveMessage[2] = 0;
+    byteArreyReceiveMessage[3] = 2+prilog;
+    byteArreyReceiveMessage[4] = 0;
+    byteArreyReceiveMessage[5] = 3+prilog;
+    byteArreyReceiveMessage[6] = 0;
+    byteArreyReceiveMessage[7] = 4;
+    byteArreyReceiveMessage[8] = 0;
+    byteArreyReceiveMessage[9] = 5;
+    byteArreyReceiveMessage[10] = 0;
+    byteArreyReceiveMessage[11] = 6;
+    byteArreyReceiveMessage[12] = 0;
+    byteArreyReceiveMessage[13] = 7;
+    byteArreyReceiveMessage[14] = 231+prilog;
+    byteArreyReceiveMessage[15] = 123+prilog;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
@@ -587,15 +605,20 @@ void MainWindow::update_ui()
     ui->receive_cool_time->setText(QString::number(receiveVector[4]));
     ui->receive_stop_current->setText(QString::number(receiveVector[5]));
     ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+    ui->receive_temperature->setText(QString::number(receiveVector[7]>>8));
+    ui->receive_noise_level->setText(QString::number(receiveVector[7]&255));
 
 
     if(((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
     {
         writeToFileLog();
-//        ui->receive_current_max->setText(QString::number(printCurrent));
         ui->receive_strength_max->setText(QString::number(printStrenght));
+        ui->receive_temperature_max->setText(QString::number(printTemperature));
+        ui->receive_noise_level_max->setText(QString::number(printNoiseLevel));
         printCurrent = 0;
         printStrenght = 0;
+        printTemperature = 0;
+        printNoiseLevel = 0;
         flagIdlingCompression = true;
         numberOfIdleCurrentValues = 0;
         sumCurrent = 0;
@@ -603,6 +626,8 @@ void MainWindow::update_ui()
         timeOfIdleGrip = 0;
     }
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
+    if(printTemperature < (receiveVector[7]>>8)){printTemperature = receiveVector[7]>>8;}
+    if(printNoiseLevel < (receiveVector[7]&255)){printNoiseLevel = receiveVector[7]&255;}
     if(printStrenght != 0){flagIdlingCompression = false;}
     oldShakeNumber = receiveVector[0];
     if(receiveVector[0] == 65535)

@@ -31,6 +31,8 @@ private:
     bool sendFlag = true;
     int printCurrent = 0;
     int printStrenght = 0;
+    int printTemperature = 0;
+    int printNoiseLevel = 0;
     int cycleMultiplier = 0;//необходим для продолжения счёта после превышения 65534 циклов(увеличивается на 1 с каждым циклом)
 
 private slots:
