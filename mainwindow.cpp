@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM5");//указали com-порт
+    serial->setPortName("COM3");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -551,6 +551,16 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_noise_level_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_noise_level_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
@@ -613,7 +623,6 @@ void MainWindow::update_ui()
     {
         writeToFileLog();
         ui->receive_strength_max->setText(QString::number(printStrenght));
-        ui->receive_temperature_max->setText(QString::number(printTemperature));
         ui->receive_noise_level_max->setText(QString::number(printNoiseLevel));
         printCurrent = 0;
         printStrenght = 0;
@@ -1094,7 +1103,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Температура:" + QString::number(printTemperature)+"       Уровень шума:" + QString::number(printNoiseLevel)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
         fileLog.close();
     }
 }
