@@ -760,6 +760,38 @@ void MainWindow::on_send_stop_current_textChanged(const QString &arg1)
         }
     }
 }
+void MainWindow::on_send_nominal_temperature_textChanged(const QString &arg1)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = NOMINAL_TEMPERATURE;
+            byteArraySendMessage[2] = arg1.toInt();
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+void MainWindow::on_send_stop_temperature_textChanged(const QString &arg1)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = STOP_TEMPERATURE;
+            byteArraySendMessage[2] = arg1.toInt();
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
 void MainWindow::on_start_clicked()
 {
     if(flagThird)
@@ -968,8 +1000,40 @@ void MainWindow::on_servo_angle_valueChanged(int value)
             QTimer::singleShot(i, this, SLOT(buffer_send_message()));
         }
     }
-    qDebug() << "on_servo_angle_valueChanged>>"+QString::number(value);
 }
+void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = START_SERVO_ANGLE;
+            byteArraySendMessage[2] = value;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+void MainWindow::on_horizontalSlider_3_valueChanged(int value)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = STOP_SERVO_ANGLE;
+            byteArraySendMessage[2] = value;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
 void MainWindow::buffer_send_message ()
 {
     if (timer.elapsed()>=PROSITY)
@@ -1000,7 +1064,9 @@ void MainWindow::send_message ()
     int temp = byteArraySendMessage[1];
     int temp2 = byteArraySendMessage[0];
     QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
-    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT || temp == CONTROL_MODE || temp == SERVO_POSITION)
+    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT || temp == CONTROL_MODE || temp == SERVO_POSITION ||
+        temp == START_SERVO_ANGLE || temp == STOP_SERVO_ANGLE || temp == NOMINAL_TEMPERATURE ||
+        temp == STOP_TEMPERATURE)
     {   
         QByteArray arrey;
         arrey[0] = byteArraySendMessage[0];
@@ -1205,3 +1271,4 @@ void MainWindow::writeToFileLog()
         fileLog.close();
     }
 }
+
