@@ -64,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent) :
             qDebug()<<info.vendorIdentifier();
         }
     }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -614,7 +616,7 @@ void MainWindow::update_ui()
     {
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
-        serial->write(byteArrayMessage);
+//        serial->write(byteArrayMessage);
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -951,7 +953,23 @@ void MainWindow::on_contorl_mode_3_clicked()
         }
     }
 }
-
+void MainWindow::on_servo_angle_valueChanged(int value)
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = SHAKE_TIME;
+            byteArraySendMessage[2] = value;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+    qDebug() << "on_servo_angle_valueChanged>>"+QString::number(value);
+}
 void MainWindow::buffer_send_message ()
 {
     if (timer.elapsed()>=PROSITY)

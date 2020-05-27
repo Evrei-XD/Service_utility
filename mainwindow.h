@@ -62,6 +62,7 @@ private slots:
     void on_contorl_mode_clicked();
     void on_contorl_mode_2_clicked();
     void on_contorl_mode_3_clicked();
+    void on_servo_angle_valueChanged(int value);
 };
 
 #endif // MAINWINDOW_H
