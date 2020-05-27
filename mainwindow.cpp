@@ -178,6 +178,20 @@ void MainWindow::set_stule()
                      "   border: lpx solid #828282;"
                      "   border-radius: 3px"
                      "}");
+    ui->send_nominal_temperature->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
+    ui->send_stop_temperature->setStyleSheet(
+                     "QLineEdit{"
+                     "   color: #555555;"
+                     "   background-color: white;"
+                     "   border: lpx solid #828282;"
+                     "   border-radius: 3px"
+                     "}");
     ui->connect_button->setStyleSheet(
                       "QPushButton{"
                       "   color: #555555;"
@@ -331,6 +345,67 @@ void MainWindow::set_stule()
                     "   background-color: gray;"
                     "   color: white;"
                     "}");
+    ui->contorl_mode->setStyleSheet(
+                    "QRadioButton{"
+                    "   color: #555555;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator {"
+                    "   width:                  10px;"
+                    "   height:                 10px;"
+                    "   border-radius:          7px;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:checked {"
+                    "    background-color:       #555555;"
+                    "    border:                 2px solid #828282;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:unchecked {"
+                    "    background-color:       white;"
+                    "    border:                 2px solid #828282;"
+                    "}");
+    ui->contorl_mode_2->setStyleSheet(
+                    "QRadioButton{"
+                    "   color: #555555;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator {"
+                    "   width:                  10px;"
+                    "   height:                 10px;"
+                    "   border-radius:          7px;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:checked {"
+                    "    background-color:       #555555;"
+                    "    border:                 2px solid #828282;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:unchecked {"
+                    "    background-color:       white;"
+                    "    border:                 2px solid #828282;"
+                    "}");
+    ui->contorl_mode_3->setStyleSheet(
+                    "QRadioButton{"
+                    "   color: #555555;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator {"
+                    "   width:                  10px;"
+                    "   height:                 10px;"
+                    "   border-radius:          7px;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:checked {"
+                    "    background-color:       #555555;"
+                    "    border:                 2px solid #828282;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:unchecked {"
+                    "    background-color:       white;"
+                    "    border:                 2px solid #828282;"
+                    "}");
+
     ui->selection_com_port->setStyleSheet(
                     "QComboBox {"
                     "   color: #555555;"
@@ -501,6 +576,16 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_start_6->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_start_7->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->info_current_max->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
@@ -556,6 +641,51 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->label_invert_2->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_3->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_4->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_5->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_6->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_7->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_8->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_9->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->label_invert_10->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->info_noise_level_max->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
@@ -566,43 +696,133 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_com_port_11->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_12->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_13->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_23->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_24->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_25->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_nominal_temperature->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_stop_temperature->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_voltage->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->frame->setObjectName( "frame1" );
     ui->frame->setStyleSheet(
                 "#frame1{"
-                "border-radius: 3px;"
-                "border: 1px solid #d5d5d5;"
+                "   border-radius: 3px;"
+                "   border: 1px solid #d5d5d5;"
                 "}"
                 );
     ui->frame_2->setObjectName( "frame2" );
     ui->frame_2->setStyleSheet(
                 "#frame2{"
-                "border-radius: 3px;"
-                "border-bottom-left-radius: 10px;"
-                "border-bottom-right-radius: 10px;"
-                "border: 1px solid #d5d5d5;"
+                "   border-radius: 3px;"
+                "   border-bottom-left-radius: 10px;"
+                "   border-bottom-right-radius: 10px;"
+                "   border: 1px solid #d5d5d5;"
                 "}"
                 );
     ui->frame_3->setObjectName( "frame3" );
     ui->frame_3->setStyleSheet(
                 "#frame3{"
-                "border-radius: 3px;"
-                "border: 1px solid #d5d5d5;"
+                "   border-radius: 3px;"
+                "   border: 1px solid #d5d5d5;"
                 "}"
                 );
     ui->frame_4->setObjectName( "frame4" );
     ui->frame_4->setStyleSheet(
                 "#frame4{"
-                "border-radius: 3px;"
-                "border-bottom-left-radius: 10px;"
-                "border-bottom-right-radius: 10px;"
-                "border: 1px solid #d5d5d5;"
+                "   border-radius: 3px;"
+                "   border-bottom-left-radius: 10px;"
+                "   border-bottom-right-radius: 10px;"
+                "   border: 1px solid #d5d5d5;"
                 "}"
                 );
     ui->frame_5->setObjectName( "frame5" );
     ui->frame_5->setStyleSheet(
                 "#frame5{"
-                "border-radius: 3px;"
-                "border: 1px solid #d5d5d5;"
+                "   border-radius: 3px;"
+                "   border: 1px solid #d5d5d5;"
+                "}"
+                );
+    ui->servo_angle->setStyleSheet(
+                "QSlider::groove:horizontal{"
+                "   border-radius: 3px;"
+                "   height: 8px;"
+                "   background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #d5d5d5, stop:1 #d5d5d5);"
+                "   margin: 2px 0;"
+                "}"
+                ""
+                "QSlider::handle:horizontal {"
+                "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #828282, stop:1 #828282);"
+                "   width: 18px;"
+                "   margin: -2px 0;"
+                "   border-radius: 3px;"
+                "}"
+                );
+    ui->start_servo_angle->setStyleSheet(
+                "QSlider::groove:horizontal{"
+                "   border-radius: 3px;"
+                "   height: 8px;"
+                "   background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #d5d5d5, stop:1 #d5d5d5);"
+                "   margin: 2px 0;"
+                "}"
+                ""
+                "QSlider::handle:horizontal {"
+                "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #828282, stop:1 #828282);"
+                "   width: 18px;"
+                "   margin: -2px 0;"
+                "   border-radius: 3px;"
+                "}"
+                );
+    ui->stop_servo_angle->setStyleSheet(
+                "QSlider::groove:horizontal{"
+                "   border-radius: 3px;"
+                "   height: 8px;"
+                "   background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #d5d5d5, stop:1 #d5d5d5);"
+                "   margin: 2px 0;"
+                "}"
+                ""
+                "QSlider::handle:horizontal {"
+                "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #828282, stop:1 #828282);"
+                "   width: 18px;"
+                "   margin: -2px 0;"
+                "   border-radius: 3px;"
                 "}"
                 );
 }
@@ -1002,7 +1222,7 @@ void MainWindow::on_servo_angle_valueChanged(int value)
         }
     }
 }
-void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+void MainWindow::on_start_servo_angle_valueChanged(int value)
 {
     if(flagThird)
     {
@@ -1018,7 +1238,7 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
         }
     }
 }
-void MainWindow::on_horizontalSlider_3_valueChanged(int value)
+void MainWindow::on_stop_servo_angle_valueChanged(int value)
 {
     if(flagThird)
     {
@@ -1272,4 +1492,3 @@ void MainWindow::writeToFileLog()
         fileLog.close();
     }
 }
-

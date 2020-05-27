@@ -199,7 +199,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>230</y>
+       <y>260</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -238,7 +238,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>170</y>
+       <y>200</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -277,7 +277,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>230</y>
+       <y>260</y>
        <width>151</width>
        <height>21</height>
       </rect>
@@ -316,7 +316,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>210</y>
+       <y>240</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -355,7 +355,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>170</y>
+       <y>200</y>
        <width>151</width>
        <height>21</height>
       </rect>
@@ -394,7 +394,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>230</y>
+       <y>260</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -433,7 +433,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>190</y>
+       <y>220</y>
        <width>41</width>
        <height>21</height>
       </rect>
@@ -472,7 +472,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>170</y>
+       <y>200</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -511,7 +511,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>190</y>
+       <y>220</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -550,7 +550,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>210</y>
+       <y>240</y>
        <width>151</width>
        <height>21</height>
       </rect>
@@ -589,7 +589,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>190</y>
+       <y>220</y>
        <width>151</width>
        <height>21</height>
       </rect>
@@ -2406,7 +2406,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_2">
+     <widget class="QSlider" name="start_servo_angle">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -2422,7 +2422,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_3">
+     <widget class="QSlider" name="stop_servo_angle">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -2442,9 +2442,9 @@
     <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>19</x>
-       <y>-1</y>
-       <width>291</width>
+       <x>20</x>
+       <y>0</y>
+       <width>351</width>
        <height>31</height>
       </rect>
      </property>

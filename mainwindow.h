@@ -63,10 +63,10 @@ private slots:
     void on_contorl_mode_2_clicked();
     void on_contorl_mode_3_clicked();
     void on_servo_angle_valueChanged(int value);
-    void on_horizontalSlider_2_valueChanged(int value);
-    void on_horizontalSlider_3_valueChanged(int value);
     void on_send_nominal_temperature_textChanged(const QString &arg1);
     void on_send_stop_temperature_textChanged(const QString &arg1);
+    void on_start_servo_angle_valueChanged(int value);
+    void on_stop_servo_angle_valueChanged(int value);
 };
 
 #endif // MAINWINDOW_H
