@@ -87,31 +87,9 @@ int sumCurrent = 0;
 int numberNoiseLevel = 0;
 int sumNoiseLevel = 0;
 int timeOfIdleGrip = 0;
-int schetchik = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
-    schetchik++;
     byteArreyReceiveMessage = serial->readAll();//читаем всё
-    byteArreyReceiveMessage[0] = 0;
-    byteArreyReceiveMessage[1] = 1+schetchik;
-    byteArreyReceiveMessage[2] = 0;
-    byteArreyReceiveMessage[3] = 2+schetchik;
-    byteArreyReceiveMessage[4] = 0;
-    byteArreyReceiveMessage[5] = 3+schetchik;
-    byteArreyReceiveMessage[6] = 0;
-    byteArreyReceiveMessage[7] = 4+schetchik;
-    byteArreyReceiveMessage[8] = 0;
-    byteArreyReceiveMessage[9] = 5+schetchik;
-    byteArreyReceiveMessage[10] = 0;
-    byteArreyReceiveMessage[11] = 6+schetchik;
-    byteArreyReceiveMessage[12] = 0;
-    byteArreyReceiveMessage[13] = 7+schetchik;
-    byteArreyReceiveMessage[14] = 8+schetchik;
-    byteArreyReceiveMessage[15] = 9+schetchik;
-    byteArreyReceiveMessage[16] = 10+schetchik;
-    byteArreyReceiveMessage[17] = 11+schetchik;
-    byteArreyReceiveMessage[18] = 0;
-    byteArreyReceiveMessage[19] = 12+schetchik;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
