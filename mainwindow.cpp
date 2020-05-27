@@ -82,28 +82,12 @@ bool flagIdlingCompression = true; //правдив пока рука сжима
 bool flagStartTimerGrip = true;
 int numberOfIdleCurrentValues = 0;
 int sumCurrent = 0;
+int numberNoiseLevel = 0;
+int sumNoiseLevel = 0;
 int timeOfIdleGrip = 0;
-int prilog = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
-    prilog++;
     byteArreyReceiveMessage = serial->readAll();//читаем всё
-    byteArreyReceiveMessage[0] = 0;
-    byteArreyReceiveMessage[1] = prilog;
-    byteArreyReceiveMessage[2] = 0;
-    byteArreyReceiveMessage[3] = 2+prilog;
-    byteArreyReceiveMessage[4] = 0;
-    byteArreyReceiveMessage[5] = 3+prilog;
-    byteArreyReceiveMessage[6] = 0;
-    byteArreyReceiveMessage[7] = 4;
-    byteArreyReceiveMessage[8] = 0;
-    byteArreyReceiveMessage[9] = 5;
-    byteArreyReceiveMessage[10] = 0;
-    byteArreyReceiveMessage[11] = 6;
-    byteArreyReceiveMessage[12] = 0;
-    byteArreyReceiveMessage[13] = 7;
-    byteArreyReceiveMessage[14] = 231+prilog;
-    byteArreyReceiveMessage[15] = 123+prilog;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
@@ -124,7 +108,9 @@ void MainWindow::serialRecieve()//получаем данные
         }
         timeOfIdleGrip = timerGrip.elapsed();
     }
-
+    sumNoiseLevel += receiveVector[7]&255;
+    numberNoiseLevel ++;
+    printNoiseLevel = sumNoiseLevel/numberNoiseLevel;
 }
 
 void MainWindow::on_send_message_clicked()
@@ -310,6 +296,23 @@ void MainWindow::set_stule()
                     "   color: white;"
                     "}");
     ui->close->setStyleSheet(
+                    "QPushButton{"
+                    "   color: #555555;"
+                    "   background-color: white;"
+                    "   border: lpx solid #828282;"
+                    "   border-radius: 3px"
+                    "}"
+                    ""
+                    "QPushButton:hover{"
+                    "   border: lpx solid #828282;"
+                    "   background-color: #d5d5d5;"
+                    "}"
+                    ""
+                    "QPushButton:hover:pressed{"
+                    "   background-color: gray;"
+                    "   color: white;"
+                    "}");
+    ui->mio_set_0->setStyleSheet(
                     "QPushButton{"
                     "   color: #555555;"
                     "   background-color: white;"
@@ -593,6 +596,13 @@ void MainWindow::set_stule()
                 "border: 1px solid #d5d5d5;"
                 "}"
                 );
+    ui->frame_5->setObjectName( "frame5" );
+    ui->frame_5->setStyleSheet(
+                "#frame5{"
+                "border-radius: 3px;"
+                "border: 1px solid #d5d5d5;"
+                "}"
+                );
 }
 
 QElapsedTimer timerUpdate;
@@ -604,7 +614,7 @@ void MainWindow::update_ui()
     {
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
-//        serial->write(byteArrayMessage);
+        serial->write(byteArrayMessage);
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -636,7 +646,7 @@ void MainWindow::update_ui()
     }
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
     if(printTemperature < (receiveVector[7]>>8)){printTemperature = receiveVector[7]>>8;}
-    if(printNoiseLevel < (receiveVector[7]&255)){printNoiseLevel = receiveVector[7]&255;}
+//    if(printNoiseLevel < (receiveVector[7]&255)){printNoiseLevel = receiveVector[7]&255;}
     if(printStrenght != 0){flagIdlingCompression = false;}
     oldShakeNumber = receiveVector[0];
     if(receiveVector[0] == 65535)
@@ -844,6 +854,21 @@ void MainWindow::on_close_clicked()
         }
     }
 }
+void MainWindow::on_mio_set_0_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = MIO_SET_0;
+            byteArraySendMessage[1] = 0;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
 void MainWindow::on_invert_clicked()
 {
     if(ui->invert->isChecked())
@@ -878,6 +903,55 @@ void MainWindow::on_invert_clicked()
         }
     }
 }
+void MainWindow::on_contorl_mode_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = CONTROL_MODE;
+            byteArraySendMessage[2] = HDLC;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+void MainWindow::on_contorl_mode_2_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = CONTROL_MODE;
+            byteArraySendMessage[2] = SERVO;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+void MainWindow::on_contorl_mode_3_clicked()
+{
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+        {
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = CONTROL_MODE;
+            byteArraySendMessage[2] = DC;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+        }
+    }
+}
+
 void MainWindow::buffer_send_message ()
 {
     if (timer.elapsed()>=PROSITY)
@@ -908,7 +982,7 @@ void MainWindow::send_message ()
     int temp = byteArraySendMessage[1];
     int temp2 = byteArraySendMessage[0];
     QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
-    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT)
+    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT || temp == CONTROL_MODE)
     {   
         QByteArray arrey;
         arrey[0] = byteArraySendMessage[0];
@@ -931,7 +1005,13 @@ void MainWindow::send_message ()
                 serial->write("TENSO_CALIB");
             }else
             {
-                serial->write(byteArraySendMessage);
+                if(temp2 == 3)
+                {
+                    serial->write("MIO_SET_0");
+                }else
+                {
+                    serial->write(byteArraySendMessage);
+                }
             }
         }
     }

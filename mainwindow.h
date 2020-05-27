@@ -58,6 +58,10 @@ private slots:
     void on_open_clicked();
     void on_close_clicked();
     void on_invert_clicked();
+    void on_mio_set_0_clicked();
+    void on_contorl_mode_clicked();
+    void on_contorl_mode_2_clicked();
+    void on_contorl_mode_3_clicked();
 };
 
 #endif // MAINWINDOW_H
