@@ -78,7 +78,7 @@ MainWindow::~MainWindow()
 }
 
 QElapsedTimer timerGrip;
-quint16 receiveVector[8];
+quint16 receiveVector[10];
 QString reseiveMessage = "";
 bool flagIdlingCompression = true; //правдив пока рука сжимается на холостом ходу
 bool flagStartTimerGrip = true;
@@ -87,9 +87,31 @@ int sumCurrent = 0;
 int numberNoiseLevel = 0;
 int sumNoiseLevel = 0;
 int timeOfIdleGrip = 0;
+int schetchik = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
+    schetchik++;
     byteArreyReceiveMessage = serial->readAll();//читаем всё
+    byteArreyReceiveMessage[0] = 0;
+    byteArreyReceiveMessage[1] = 1+schetchik;
+    byteArreyReceiveMessage[2] = 0;
+    byteArreyReceiveMessage[3] = 2+schetchik;
+    byteArreyReceiveMessage[4] = 0;
+    byteArreyReceiveMessage[5] = 3+schetchik;
+    byteArreyReceiveMessage[6] = 0;
+    byteArreyReceiveMessage[7] = 4+schetchik;
+    byteArreyReceiveMessage[8] = 0;
+    byteArreyReceiveMessage[9] = 5+schetchik;
+    byteArreyReceiveMessage[10] = 0;
+    byteArreyReceiveMessage[11] = 6+schetchik;
+    byteArreyReceiveMessage[12] = 0;
+    byteArreyReceiveMessage[13] = 7+schetchik;
+    byteArreyReceiveMessage[14] = 8+schetchik;
+    byteArreyReceiveMessage[15] = 9+schetchik;
+    byteArreyReceiveMessage[16] = 10+schetchik;
+    byteArreyReceiveMessage[17] = 11+schetchik;
+    byteArreyReceiveMessage[18] = 0;
+    byteArreyReceiveMessage[19] = 12+schetchik;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
@@ -110,7 +132,7 @@ void MainWindow::serialRecieve()//получаем данные
         }
         timeOfIdleGrip = timerGrip.elapsed();
     }
-    sumNoiseLevel += receiveVector[7]&255;
+    sumNoiseLevel += receiveVector[8]&255;
     numberNoiseLevel ++;
     printNoiseLevel = sumNoiseLevel/numberNoiseLevel;
 }
@@ -628,8 +650,10 @@ void MainWindow::update_ui()
     ui->receive_stop_current->setText(QString::number(receiveVector[5]));
     ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
     ui->receive_temperature->setText(QString::number(receiveVector[7]>>8));
-    ui->receive_noise_level->setText(QString::number(receiveVector[7]&255));
-
+    ui->receive_nominal_temperature->setText(QString::number(receiveVector[7]&255));
+    ui->receive_stop_temperature->setText(QString::number(receiveVector[8]>>8));
+    ui->receive_noise_level->setText(QString::number(receiveVector[8]&255));
+    ui->receive_voltage->setText(QString::number(receiveVector[9]));
 
     if(((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
     {
@@ -648,7 +672,6 @@ void MainWindow::update_ui()
     }
     if(printStrenght < receiveVector[2]){printStrenght = receiveVector[2];}
     if(printTemperature < (receiveVector[7]>>8)){printTemperature = receiveVector[7]>>8;}
-//    if(printNoiseLevel < (receiveVector[7]&255)){printNoiseLevel = receiveVector[7]&255;}
     if(printStrenght != 0){flagIdlingCompression = false;}
     oldShakeNumber = receiveVector[0];
     if(receiveVector[0] == 65535)
