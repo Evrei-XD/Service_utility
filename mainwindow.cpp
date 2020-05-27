@@ -963,7 +963,7 @@ void MainWindow::on_servo_angle_valueChanged(int value)
         for (int i=PROSITY-10; i<=PROSITY+20; i++)
         {
             byteArraySendMessage[0] = SEND;
-            byteArraySendMessage[1] = SHAKE_TIME;
+            byteArraySendMessage[1] = SERVO_POSITION;
             byteArraySendMessage[2] = value;
             QTimer::singleShot(i, this, SLOT(buffer_send_message()));
         }
@@ -1000,7 +1000,7 @@ void MainWindow::send_message ()
     int temp = byteArraySendMessage[1];
     int temp2 = byteArraySendMessage[0];
     QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
-    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT || temp == CONTROL_MODE)
+    if(temp == MOVEMENT || temp == SINGLE_MOVEMENT || temp == CONTROL_MODE || temp == SERVO_POSITION)
     {   
         QByteArray arrey;
         arrey[0] = byteArraySendMessage[0];
