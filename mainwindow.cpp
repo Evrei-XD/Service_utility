@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM5");//указали com-порт
+    serial->setPortName("COM3");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -946,7 +946,7 @@ void MainWindow::update_ui()
     {
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
-//        serial->write(byteArrayMessage);
+        serial->write(byteArrayMessage);
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
