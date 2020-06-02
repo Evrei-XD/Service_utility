@@ -31,9 +31,17 @@ private:
     bool sendFlag = true;
     int printStrenght = 0;
     int printTemperature = 0;
-    int meanCurrent = 0;
-    int meanNoiseLevel = 0;
-    int meanVoltage = 0;
+    float meanCurrent = 0;
+    float meanNoiseLevel = 0;
+    float meanVoltage = 0;
+    int lastMeanCycleVoltage = 0;
+    float startVoltage = 0;
+    float periodEnergy = 0;
+    float sumPeriodEnergy = 0;
+    float maxButteryEnergyCalculated = 0; //энергия, которую способна отдать не полностью заряженная батарея
+    float enrgyRestPractical = 0; //энергия, которая осталась в батарейке
+//    int enrgyRestTheoreticalCalculated = 0; //
+    float enrgyRestTheoretical = 0; //энергия, которая осталась в батарейке, если считать батарейку полностью заряженной изначально
     int cycleMultiplier = 0;//необходим для продолжения счёта после превышения 65534 циклов(увеличивается на 1 с каждым циклом)
 
 private slots:

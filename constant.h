@@ -5,6 +5,17 @@ static const int RECEIVE = 0;
 static const int SEND = 1;
 static const int TENSO_CALIB = 2;
 static const int MIO_SET_0 = 3;
+static const int MAX_BATTERY_ENERGY_TEORETICAL = 31968; // = 7,4V * 1,2A/h * 3600s
+static const float MIN_BATTERY_ENERGY_TEORETICAL = 26784; // = 6,2V * 1,2A/h * 3600s
+// 36288 - 26784 = 9504‬ * 3,3636
+
+// 50%
+// 15984‬ теоретическое значение
+// 15983,8‬ расчётное
+
+// 30%
+// 9590,4 ‬теоретическое значение
+// 9590,3 расчётное
 
 //Registers
 static const int MOVEMENT = 1;
@@ -33,7 +44,7 @@ static const int HDLC = 1;
 static const int SERVO = 2;
 static const int DC = 3;
 
-//
+//minimum delay between packets
 static const int PROSITY = 30;
 
 #endif // CONSTANT_H

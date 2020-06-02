@@ -1608,7 +1608,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Температура:" + QString::number(printTemperature)+"       Уровень шума:" + QString::number(meanNoiseLevel)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват:"+QString::number(periodEnergy)+"Дж       Оставшаяся энергия теоретически:"+QString::number(enrgyRestTheoretical)+"Дж       Оставшаяся энергия расчитанная:"+QString::number(enrgyRestPractical)+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила-" + QString::number(printStrenght)+"       Температура-" + QString::number(printTemperature)+"       Уровень шума-" + QString::number(meanNoiseLevel)+"       Время сжатия-"+QString::number(timeOfIdleGrip)+"       Время-"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват-"+QString::number(periodEnergy)+"       Оставшаяся энергия теоретически-"+QString::number(enrgyRestTheoretical)+"       Оставшаяся энергия расчитанная:"+QString::number(enrgyRestPractical)+"\n";
         fileLog.close();
     }
 }
