@@ -770,6 +770,16 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_com_port_14->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_15->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->info_com_port_23->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
@@ -781,6 +791,46 @@ void MainWindow::set_stule()
                     "}"
                     );
     ui->info_com_port_25->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_26->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_27->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->info_com_port_28->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->max_energy->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->max_energy_calculated->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->energy_rest->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->energy_rest_calculated->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->enargy_shake->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
                     "}"
@@ -1608,7 +1658,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Температура:" + QString::number(printTemperature)+"       Уровень шума:" + QString::number(meanNoiseLevel)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват:"+QString::number(periodEnergy)+"Дж       Оставшаяся энергия теоретически:"+QString::number(enrgyRestTheoretical)+"Дж       Оставшаяся энергия расчитанная:"+QString::number(enrgyRestPractical)+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила-" + QString::number(printStrenght)+"       Температура-" + QString::number(printTemperature)+"       Уровень шума-" + QString::number(meanNoiseLevel)+"       Время сжатия-"+QString::number(timeOfIdleGrip)+"       Время-"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват-"+QString::number(periodEnergy)+"       Оставшаяся энергия теоретически-"+QString::number(enrgyRestTheoretical)+"       Оставшаяся энергия расчитанна-"+QString::number(enrgyRestPractical)+"\n";
         fileLog.close();
     }
 }
