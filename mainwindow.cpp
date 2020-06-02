@@ -86,47 +86,47 @@ int sumNoiseLevel = 0;
 int numberVoltage = 0;
 int sumVoltage = 0;
 int timeOfIdleGrip = 0;
-int schetchik = 0;
-int schetchik2 = 2;
-bool first = true;
-bool second = true;
+//int schetchik = 0;
+//int schetchik2 = 2;
+//bool first = true;
+//bool second = true;
 void MainWindow::serialRecieve()//получаем данные
 {
-    schetchik++;
-    if(schetchik % 255 == 1){second = true;}
+//    schetchik++;
+//    if(schetchik % 255 == 1){second = true;}
     byteArreyReceiveMessage = serial->readAll();//читаем всё
-    byteArreyReceiveMessage[0] = 0;
-    if(first)
-    {
-        byteArreyReceiveMessage[1] = 1;
-        first=false;
-    } else {
-        if(second)
-        {
-            byteArreyReceiveMessage[1] = schetchik2++;
-            second=false;
-        } else {
-            byteArreyReceiveMessage[1] = schetchik2;
-        }
-    }
-    byteArreyReceiveMessage[2] = 0;
-    byteArreyReceiveMessage[3] = 2+schetchik;
-    byteArreyReceiveMessage[4] = 0;
-    byteArreyReceiveMessage[5] = 3+schetchik;
-    byteArreyReceiveMessage[6] = 0;
-    byteArreyReceiveMessage[7] = 4+schetchik;
-    byteArreyReceiveMessage[8] = 0;
-    byteArreyReceiveMessage[9] = 5+schetchik;
-    byteArreyReceiveMessage[10] = 0;
-    byteArreyReceiveMessage[11] = 6+schetchik;
-    byteArreyReceiveMessage[12] = 0;
-    byteArreyReceiveMessage[13] = 7+schetchik;
-    byteArreyReceiveMessage[14] = 8+schetchik;
-    byteArreyReceiveMessage[15] = 9+schetchik;
-    byteArreyReceiveMessage[16] = 10+schetchik;
-    byteArreyReceiveMessage[17] = 11+schetchik;
-    byteArreyReceiveMessage[18] = 28;
-    byteArreyReceiveMessage[19] = 134-schetchik;
+//    byteArreyReceiveMessage[0] = 0;
+//    if(first)
+//    {
+//        byteArreyReceiveMessage[1] = 1;
+//        first=false;
+//    } else {
+//        if(second)
+//        {
+//            byteArreyReceiveMessage[1] = schetchik2++;
+//            second=false;
+//        } else {
+//            byteArreyReceiveMessage[1] = schetchik2;
+//        }
+//    }
+//    byteArreyReceiveMessage[2] = 0;
+//    byteArreyReceiveMessage[3] = 2+schetchik;
+//    byteArreyReceiveMessage[4] = 0;
+//    byteArreyReceiveMessage[5] = 3+schetchik;
+//    byteArreyReceiveMessage[6] = 0;
+//    byteArreyReceiveMessage[7] = 4+schetchik;
+//    byteArreyReceiveMessage[8] = 0;
+//    byteArreyReceiveMessage[9] = 5+schetchik;
+//    byteArreyReceiveMessage[10] = 0;
+//    byteArreyReceiveMessage[11] = 6+schetchik;
+//    byteArreyReceiveMessage[12] = 0;
+//    byteArreyReceiveMessage[13] = 7+schetchik;
+//    byteArreyReceiveMessage[14] = 8+schetchik;
+//    byteArreyReceiveMessage[15] = 9+schetchik;
+//    byteArreyReceiveMessage[16] = 10+schetchik;
+//    byteArreyReceiveMessage[17] = 11+schetchik;
+//    byteArreyReceiveMessage[18] = 28;
+//    byteArreyReceiveMessage[19] = 134-schetchik;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
