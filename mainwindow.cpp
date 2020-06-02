@@ -1,10 +1,7 @@
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "LogCategories.h"
 #include "constant.h"
 #include "mainwindow.h"
-#include "mainwindow.h"
-#include <QDebug>
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
 #include <QElapsedTimer>
@@ -86,10 +83,34 @@ int numberOfIdleCurrentValues = 0;
 int sumCurrent = 0;
 int numberNoiseLevel = 0;
 int sumNoiseLevel = 0;
+int numberVoltage = 0;
+int sumVoltage = 0;
 int timeOfIdleGrip = 0;
+int schetchik = 0;
 void MainWindow::serialRecieve()//получаем данные
 {
+    schetchik++;
     byteArreyReceiveMessage = serial->readAll();//читаем всё
+    byteArreyReceiveMessage[0] = 0;
+    byteArreyReceiveMessage[1] = 1+schetchik;
+    byteArreyReceiveMessage[2] = 0;
+    byteArreyReceiveMessage[3] = 2+schetchik;
+    byteArreyReceiveMessage[4] = 0;
+    byteArreyReceiveMessage[5] = 3+schetchik;
+    byteArreyReceiveMessage[6] = 0;
+    byteArreyReceiveMessage[7] = 4+schetchik;
+    byteArreyReceiveMessage[8] = 0;
+    byteArreyReceiveMessage[9] = 5+schetchik;
+    byteArreyReceiveMessage[10] = 0;
+    byteArreyReceiveMessage[11] = 6+schetchik;
+    byteArreyReceiveMessage[12] = 0;
+    byteArreyReceiveMessage[13] = 7+schetchik;
+    byteArreyReceiveMessage[14] = 8+schetchik;
+    byteArreyReceiveMessage[15] = 9+schetchik;
+    byteArreyReceiveMessage[16] = 10+schetchik;
+    byteArreyReceiveMessage[17] = 11+schetchik;
+    byteArreyReceiveMessage[18] = 0;
+    byteArreyReceiveMessage[19] = 12+schetchik;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
@@ -101,8 +122,8 @@ void MainWindow::serialRecieve()//получаем данные
     {
         sumCurrent += receiveVector[1];
         numberOfIdleCurrentValues++;
-        printCurrent = sumCurrent/numberOfIdleCurrentValues;
-        ui->receive_current_max->setText(QString::number(printCurrent));
+        meanCurrent = sumCurrent/numberOfIdleCurrentValues;
+        ui->receive_current_max->setText(QString::number(meanCurrent));
         if(flagStartTimerGrip)
         {
             timerGrip.start();
@@ -110,9 +131,16 @@ void MainWindow::serialRecieve()//получаем данные
         }
         timeOfIdleGrip = timerGrip.elapsed();
     }
+
+    //calculate mean noise level
     sumNoiseLevel += receiveVector[8]&255;
     numberNoiseLevel ++;
-    printNoiseLevel = sumNoiseLevel/numberNoiseLevel;
+    meanNoiseLevel = sumNoiseLevel/numberNoiseLevel;
+
+    //calculate mean voltage level
+    sumVoltage += receiveVector[9];
+    numberVoltage ++;
+    meanVoltage = sumVoltage/numberVoltage;
 }
 
 void MainWindow::on_send_message_clicked()
@@ -686,12 +714,27 @@ void MainWindow::set_stule()
                     "   color: #555555;"
                     "}"
                     );
+    ui->label_invert_11->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->info_noise_level_max->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
                     "}"
                     );
+    ui->info_noise_level_max_2->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
     ui->receive_noise_level_max->setStyleSheet(
+                    "QLabel{"
+                    "   color: #555555;"
+                    "}"
+                    );
+    ui->receive_voltage_mean->setStyleSheet(
                     "QLabel{"
                     "   color: #555555;"
                     "}"
@@ -857,14 +900,20 @@ void MainWindow::update_ui()
     {
         writeToFileLog();
         ui->receive_strength_max->setText(QString::number(printStrenght));
-        ui->receive_noise_level_max->setText(QString::number(printNoiseLevel));
-        printCurrent = 0;
+        ui->receive_noise_level_max->setText(QString::number(meanNoiseLevel));
+        ui->receive_voltage_mean->setText(QString::number(meanVoltage));
         printStrenght = 0;
         printTemperature = 0;
-        printNoiseLevel = 0;
         flagIdlingCompression = true;
+        meanCurrent = 0;
         numberOfIdleCurrentValues = 0;
         sumCurrent = 0;
+        meanNoiseLevel = 0;
+        sumNoiseLevel = 0;
+        numberNoiseLevel = 0;
+        meanVoltage = 0;
+        sumVoltage = 0;
+        numberVoltage = 0;
         flagStartTimerGrip = true;
         timeOfIdleGrip = 0;
     }
@@ -1153,6 +1202,40 @@ void MainWindow::on_invert_clicked()
                 byteArraySendMessage[0] = SEND;
                 byteArraySendMessage[1] = SINGLE_MOVEMENT;
                 byteArraySendMessage[2] = CANCEL_INVERT;
+                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            }
+        }
+    }
+}
+void MainWindow::on_test_HDLC_clicked()
+{
+    if(ui->test_HDLC->isChecked())
+    {
+        if(flagThird)
+        {
+            timer.start();
+            flagFirst = true;
+            flagSecond = false;
+            for (int i=PROSITY-10; i<=PROSITY+20; i++)
+            {
+                byteArraySendMessage[0] = SEND;
+                byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                byteArraySendMessage[2] = TEST_HDLC_ON;
+                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            }
+        }
+    } else
+    {
+        if(flagThird)
+        {
+            timer.start();
+            flagFirst = true;
+            flagSecond = false;
+            for (int i=PROSITY-10; i<=PROSITY+20; i++)
+            {
+                byteArraySendMessage[0] = SEND;
+                byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                byteArraySendMessage[2] = TEST_HDLC_OFF;
                 QTimer::singleShot(i, this, SLOT(buffer_send_message()));
             }
         }
@@ -1488,7 +1571,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(printCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Температура:" + QString::number(printTemperature)+"       Уровень шума:" + QString::number(printNoiseLevel)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
+        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила:" + QString::number(printStrenght)+"       Температура:" + QString::number(printTemperature)+"       Уровень шума:" + QString::number(meanNoiseLevel)+"       Время сжатия:"+QString::number(timeOfIdleGrip)+"мс       Время:"+QDateTime::currentDateTime().toString("hh:mm")+"\n";
         fileLog.close();
     }
 }

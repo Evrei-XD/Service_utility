@@ -25,6 +25,8 @@ static const int OPEN = 1;
 static const int CLOSE = 2;
 static const int INVERT = 3;
 static const int CANCEL_INVERT = 4;
+static const int TEST_HDLC_ON = 5;
+static const int TEST_HDLC_OFF = 6;
 
 //CONTROL_MODE registers
 static const int HDLC = 1;

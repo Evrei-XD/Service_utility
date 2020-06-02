@@ -29,10 +29,11 @@ private:
     QString productIdentifier;
     QString vendorIdentifier;
     bool sendFlag = true;
-    int printCurrent = 0;
     int printStrenght = 0;
     int printTemperature = 0;
-    int printNoiseLevel = 0;
+    int meanCurrent = 0;
+    int meanNoiseLevel = 0;
+    int meanVoltage = 0;
     int cycleMultiplier = 0;//необходим для продолжения счёта после превышения 65534 циклов(увеличивается на 1 с каждым циклом)
 
 private slots:
@@ -67,6 +68,7 @@ private slots:
     void on_send_stop_temperature_textChanged(const QString &arg1);
     void on_start_servo_angle_valueChanged(int value);
     void on_stop_servo_angle_valueChanged(int value);
+    void on_test_HDLC_clicked();
 };
 
 #endif // MAINWINDOW_H
