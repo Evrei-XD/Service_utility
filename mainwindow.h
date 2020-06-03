@@ -6,6 +6,17 @@
 #include <QMainWindow>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+#include <QDateTime>
+#include <QElapsedTimer>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QString>
+#include <QTimer>
+#include <QtEndian>
+#include <QDir>
+#include <QTextStream>
 
 
 namespace Ui {
@@ -43,6 +54,7 @@ private:
 //    int enrgyRestTheoreticalCalculated = 0; //
     float enrgyRestTheoretical = 0; //энергия, которая осталась в батарейке, если считать батарейку полностью заряженной изначально
     int cycleMultiplier = 0;//необходим для продолжения счёта после превышения 65534 циклов(увеличивается на 1 с каждым циклом)
+    QTimer timer_plot;
 
 private slots:
     void serialRecieve();//получаем данные
@@ -53,6 +65,7 @@ private slots:
     void separateSecondByte (QString secondByte);
     void on_connect_button_clicked();
     void update_ui();
+    void add_graph();
     void on_start_clicked();
     void on_pause_clicked();
     void on_stop_clicked();
@@ -77,6 +90,7 @@ private slots:
     void on_start_servo_angle_valueChanged(int value);
     void on_stop_servo_angle_valueChanged(int value);
     void on_test_HDLC_clicked();
+    void realtimePlot();
 };
 
 #endif // MAINWINDOW_H

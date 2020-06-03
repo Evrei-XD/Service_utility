@@ -2,20 +2,6 @@
 #include "LogCategories.h"
 #include "constant.h"
 #include "mainwindow.h"
-#include <QtSerialPort/QSerialPortInfo>
-#include <QDateTime>
-#include <QElapsedTimer>
-#include <QMessageBox>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QScrollArea>
-#include <QScrollBar>
-#include <QString>
-#include <QTimer>
-#include <QtEndian>
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
 
 QFile fileLog("Log/Log__"+QDateTime::currentDateTime().toString("hh-mm-ss  dd.MM.yyyy") + ".txt");
 MainWindow::MainWindow(QWidget *parent) :
@@ -40,7 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     serial->setStopBits(QSerialPort::OneStop);
     serial->setFlowControl(QSerialPort::NoFlowControl);
 
-    update_ui();//вызов повторяющейся функции
+    update_ui();//вызов повторяющейся функции обновления отображаемых параметров
+    add_graph();//инициализация графиков в подготовленную форму
 
     QObject::connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
 //    connect(serial, SIGNAL(ReadPastEnd()), this, SLOT(serialRecieveFinish()));
@@ -1424,6 +1411,19 @@ void MainWindow::on_stop_servo_angle_valueChanged(int value)
         }
     }
 }
+void MainWindow::on_connect_button_clicked()
+{
+    serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
+    serial->setPortName(ui->selection_com_port->currentText());//указали com-порт и параметры порта (далее)
+    serial->setBaudRate(QSerialPort::Baud115200);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    serial->open((QIODevice::ReadWrite));//открыли порт
+
+    connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
+}
 
 void MainWindow::buffer_send_message ()
 {
@@ -1632,24 +1632,62 @@ void MainWindow::separateSecondByte (QString secondByte)
     }
 }
 
-
-
-void MainWindow::on_connect_button_clicked()
+void MainWindow::add_graph()
 {
-    serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName(ui->selection_com_port->currentText());//указали com-порт и параметры порта (далее)
-    serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    serial->open((QIODevice::ReadWrite));//открыли порт
+    /* Add graph and set the curve line color to green */
+    ui->strenght_plot->addGraph();
+    ui->strenght_plot->graph(0)->setPen(QPen(Qt::darkRed));
+    ui->strenght_plot->graph(0)->setAntialiasedFill(true);
+    ui->strenght_plot->graph(0)->setAntialiasedFill(true);
 
-    connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieve()));//соединяем чтение-приём данных
+    /* Configure x-Axis as time in secs */
+    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+    timeTicker->setTimeFormat("%s");
+    ui->strenght_plot->xAxis->setTicker(timeTicker);
+    ui->strenght_plot->axisRect()->setupFullAxesBox();
 
-    qDebug()<<"Выбрали: "+ui->selection_com_port->currentText()+"Определился: " + serial->portName();
+    /* Configure x and y-Axis to display Labels */
+    ui->strenght_plot->xAxis->setTickLabelFont(QFont(QFont().family(),6));
+    ui->strenght_plot->yAxis->setTickLabelFont(QFont(QFont().family(),6));
+    ui->strenght_plot->xAxis->setLabel("Время (с)");
+
+    /* Make top and right axis visible, but without ticks and label */
+    ui->strenght_plot->xAxis2->setVisible(true);
+    ui->strenght_plot->yAxis->setVisible(true);
+    ui->strenght_plot->xAxis2->setTicks(false);//false
+    ui->strenght_plot->yAxis2->setTicks(false);//false
+    ui->strenght_plot->xAxis2->setTickLabels(false);//false
+    ui->strenght_plot->yAxis2->setTickLabels(false);//false
+
+    /* Set up and initialize the graph plotting timer */
+    connect(&timer_plot, SIGNAL(timeout()),this,SLOT(realtimePlot()));
+    timer_plot.start(5);
 }
 
+/****************************************************************
+ * Function Name : realtimePlot
+ * Description   : Displays the real time graph on the GUI
+ * Returns       : None
+ * Params        : None
+ ****************************************************************/
+void MainWindow::realtimePlot()
+{
+    static QTime time(QTime::currentTime());
+    double key = time.elapsed()/1000.0;//100
+    static double lastPointKey = 0;
+    double data = 0;
+    if(key - lastPointKey > 0.033)//0.002
+    {
+        data = QRandomGenerator::global()->generateDouble();
+        ui->strenght_plot->graph(0)->addData(key, data);
+        lastPointKey = key;
+    }
+
+    /* make key axis range scroll right with the data at a constant range of 8. */
+    ui->strenght_plot->graph(0)->rescaleValueAxis();
+    ui->strenght_plot->xAxis->setRange(key, 5, Qt::AlignRight);
+    ui->strenght_plot->replot();
+}
 
 QTextStream stream (&fileLog);
 QString buffer = "";
