@@ -2983,17 +2983,17 @@
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>10</y>
+      <y>200</y>
       <width>521</width>
       <height>191</height>
      </rect>
     </property>
    </widget>
-   <widget class="QCustomPlot" name="widget_2" native="true">
+   <widget class="QCustomPlot" name="current_plot" native="true">
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>200</y>
+      <y>10</y>
       <width>521</width>
       <height>191</height>
      </rect>

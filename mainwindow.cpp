@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM3");//указали com-порт
+    serial->setPortName("COM5");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -73,47 +73,47 @@ int sumNoiseLevel = 0;
 int numberVoltage = 0;
 int sumVoltage = 0;
 int timeOfIdleGrip = 0;
-//int schetchik = 0;
-//int schetchik2 = 2;
-//bool first = true;
-//bool second = true;
+int schetchik = 0;
+int schetchik2 = 2;
+bool first = true;
+bool second = true;
 void MainWindow::serialRecieve()//получаем данные
 {
-//    schetchik++;
-//    if(schetchik % 255 == 1){second = true;}
+    schetchik++;
+    if(schetchik % 255 == 1){second = true;}
     byteArreyReceiveMessage = serial->readAll();//читаем всё
-//    byteArreyReceiveMessage[0] = 0;
-//    if(first)
-//    {
-//        byteArreyReceiveMessage[1] = 1;
-//        first=false;
-//    } else {
-//        if(second)
-//        {
-//            byteArreyReceiveMessage[1] = schetchik2++;
-//            second=false;
-//        } else {
-//            byteArreyReceiveMessage[1] = schetchik2;
-//        }
-//    }
-//    byteArreyReceiveMessage[2] = 0;
-//    byteArreyReceiveMessage[3] = 2+schetchik;
-//    byteArreyReceiveMessage[4] = 0;
-//    byteArreyReceiveMessage[5] = 3+schetchik;
-//    byteArreyReceiveMessage[6] = 0;
-//    byteArreyReceiveMessage[7] = 4+schetchik;
-//    byteArreyReceiveMessage[8] = 0;
-//    byteArreyReceiveMessage[9] = 5+schetchik;
-//    byteArreyReceiveMessage[10] = 0;
-//    byteArreyReceiveMessage[11] = 6+schetchik;
-//    byteArreyReceiveMessage[12] = 0;
-//    byteArreyReceiveMessage[13] = 7+schetchik;
-//    byteArreyReceiveMessage[14] = 8+schetchik;
-//    byteArreyReceiveMessage[15] = 9+schetchik;
-//    byteArreyReceiveMessage[16] = 10+schetchik;
-//    byteArreyReceiveMessage[17] = 11+schetchik;
-//    byteArreyReceiveMessage[18] = 28;
-//    byteArreyReceiveMessage[19] = 134-schetchik;
+    byteArreyReceiveMessage[0] = 0;
+    if(first)
+    {
+        byteArreyReceiveMessage[1] = 1;
+        first=false;
+    } else {
+        if(second)
+        {
+            byteArreyReceiveMessage[1] = schetchik2++;
+            second=false;
+        } else {
+            byteArreyReceiveMessage[1] = schetchik2;
+        }
+    }
+    byteArreyReceiveMessage[2] = 0;
+    byteArreyReceiveMessage[3] = 2+schetchik;
+    byteArreyReceiveMessage[4] = 0;
+    byteArreyReceiveMessage[5] = 3+schetchik;
+    byteArreyReceiveMessage[6] = 0;
+    byteArreyReceiveMessage[7] = 4+schetchik;
+    byteArreyReceiveMessage[8] = 0;
+    byteArreyReceiveMessage[9] = 5+schetchik;
+    byteArreyReceiveMessage[10] = 0;
+    byteArreyReceiveMessage[11] = 6+schetchik;
+    byteArreyReceiveMessage[12] = 0;
+    byteArreyReceiveMessage[13] = 7+schetchik;
+    byteArreyReceiveMessage[14] = 8+schetchik;
+    byteArreyReceiveMessage[15] = 9+schetchik;
+    byteArreyReceiveMessage[16] = 10+schetchik;
+    byteArreyReceiveMessage[17] = 11+schetchik;
+    byteArreyReceiveMessage[18] = 28;
+    byteArreyReceiveMessage[19] = 134-schetchik;
     QDataStream dataStream(byteArreyReceiveMessage);
     serialBuffer = byteArreyReceiveMessage.toHex();
 
@@ -933,7 +933,7 @@ void MainWindow::update_ui()
     {
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
-        serial->write(byteArrayMessage);
+//        serial->write(byteArrayMessage);
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -1632,12 +1632,50 @@ void MainWindow::separateSecondByte (QString secondByte)
     }
 }
 
+/****************************************************************
+ * Function Name : add_graph
+ * Description   : Displays the real time graph on the GUI
+ * Returns       : None
+ * Params        : None
+ ****************************************************************/
 void MainWindow::add_graph()
 {
+
+    /////////////////////////////////////////////////////
+    /// инициализация графика силы тока
+    /////////////////////////////////////////////////////
+    /* Add graph and set the curve line color to green */
+    ui->current_plot->addGraph();
+    ui->current_plot->graph(0)->setPen(QPen(Qt::darkRed));
+    ui->current_plot->graph(0)->setAntialiased(true);
+    ui->current_plot->graph(0)->setAntialiasedFill(true);
+
+    /* Configure x-Axis as time in secs */
+    QSharedPointer<QCPAxisTickerTime> timeTickerStrenghtGraph(new QCPAxisTickerTime);
+    timeTickerStrenghtGraph->setTimeFormat("%s");
+    ui->current_plot->xAxis->setTicker(timeTickerStrenghtGraph);
+    ui->current_plot->axisRect()->setupFullAxesBox();
+
+    /* Configure x and y-Axis to display Labels */
+    ui->current_plot->xAxis->setTickLabelFont(QFont(QFont().family(),6));
+    ui->current_plot->yAxis->setTickLabelFont(QFont(QFont().family(),6));
+    ui->current_plot->xAxis->setLabel("Время (с)");
+
+    /* Make top and right axis visible, but without ticks and label */
+    ui->current_plot->xAxis2->setVisible(true);
+    ui->current_plot->yAxis->setVisible(true);
+    ui->current_plot->xAxis2->setTicks(false);//false
+    ui->current_plot->yAxis2->setTicks(false);//false
+    ui->current_plot->xAxis2->setTickLabels(false);//false
+    ui->current_plot->yAxis2->setTickLabels(false);//false
+
+    /////////////////////////////////////////////////////
+    /// инициализация графика тензодатчика
+    /////////////////////////////////////////////////////
     /* Add graph and set the curve line color to green */
     ui->strenght_plot->addGraph();
     ui->strenght_plot->graph(0)->setPen(QPen(Qt::darkRed));
-    ui->strenght_plot->graph(0)->setAntialiasedFill(true);
+    ui->strenght_plot->graph(0)->setAntialiased(true);
     ui->strenght_plot->graph(0)->setAntialiasedFill(true);
 
     /* Configure x-Axis as time in secs */
@@ -1676,17 +1714,23 @@ void MainWindow::realtimePlot()
     double key = time.elapsed()/1000.0;//100
     static double lastPointKey = 0;
     double data = 0;
+    double data2 = 0;
     if(key - lastPointKey > 0.033)//0.002
     {
         data = QRandomGenerator::global()->generateDouble();
-        ui->strenght_plot->graph(0)->addData(key, data);
+        data2 = QRandomGenerator::global()->generateDouble();
+        ui->strenght_plot->graph(0)->addData(key, receiveVector[2]);
+        ui->current_plot->graph(0)->addData(key, receiveVector[1]);
         lastPointKey = key;
     }
 
     /* make key axis range scroll right with the data at a constant range of 8. */
     ui->strenght_plot->graph(0)->rescaleValueAxis();
+    ui->current_plot->graph(0)->rescaleValueAxis();
     ui->strenght_plot->xAxis->setRange(key, 5, Qt::AlignRight);
+    ui->current_plot->xAxis->setRange(key, 5, Qt::AlignRight);
     ui->strenght_plot->replot();
+    ui->current_plot->replot();
 }
 
 QTextStream stream (&fileLog);
