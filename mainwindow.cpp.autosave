@@ -3,6 +3,14 @@
 #include "constant.h"
 #include "mainwindow.h"
 
+
+int receiveCurrent = 0;
+int receiveStrength = 0;
+int receiveStopCurrent = 0;
+int receiveCoolTime = 0;
+int receiveShakeTime = 0;
+int receiveStopStrenghth = 0;
+
 QFile fileLog("Log/Log__"+QDateTime::currentDateTime().toString("hh-mm-ss  dd.MM.yyyy") + ".txt");
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -123,7 +131,7 @@ void MainWindow::serialRecieve()//получаем данные
     }
     if(flagIdlingCompression)
     {
-        sumCurrent += receiveVector[1];
+        sumCurrent += receiveCurrent;
         numberOfIdleCurrentValues++;
         meanCurrent = sumCurrent/numberOfIdleCurrentValues;
         ui->receive_current_max->setText(QString::number(meanCurrent));
@@ -938,12 +946,18 @@ void MainWindow::update_ui()
         timerUpdate.start();
     }
     ui->receive_shakes_number->setText(QString::number((65535 * cycleMultiplier)+receiveVector[0]));
-    ui->receive_current->setText(QString::number(receiveVector[1]));
-    ui->receive_strength->setText(QString::number((receiveVector[2]-658)*2));
-    ui->receive_shake_time->setText(QString::number(receiveVector[3]));
-    ui->receive_cool_time->setText(QString::number(receiveVector[4]));
-    ui->receive_stop_current->setText(QString::number(receiveVector[5]));
-    ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+    receiveCurrent = receiveVector[1];
+    receiveStrength = (receiveVector[2]-658)*2;
+    receiveShakeTime = receiveVector[3];
+    receiveCoolTime = receiveVector[4];
+    receiveStopCurrent = receiveVector[5];
+    receiveStopStrenghth = receiveVector[6];
+    ui->receive_current->setText(QString::number(receiveCurrent)); 
+    ui->receive_strength->setText(QString::number(receiveStrength));
+    ui->receive_shake_time->setText(QString::number(receiveShakeTime));
+    ui->receive_cool_time->setText(QString::number(receiveCoolTime));
+    ui->receive_stop_current->setText(QString::number(receiveStopCurrent));
+    ui->receive_stop_strenghth->setText(QString::number(receiveStopStrenghth));
     ui->receive_temperature->setText(QString::number(receiveVector[7]>>8));
     ui->receive_nominal_temperature->setText(QString::number(receiveVector[7]&255));
     ui->receive_stop_temperature->setText(QString::number(receiveVector[8]>>8));
@@ -990,7 +1004,7 @@ void MainWindow::update_ui()
         flagStartTimerGrip = true;
         timeOfIdleGrip = 0;
     }
-    if(printStrenght < (receiveVector[2]-658)*2){printStrenght = (receiveVector[2]-658)*2;}
+    if(printStrenght < (receiveStrength)){printStrenght = receiveStrength;}
     if(printTemperature < (receiveVector[7]>>8)){printTemperature = receiveVector[7]>>8;}
     if(printStrenght != 0){flagIdlingCompression = false;}
     oldShakeNumber = receiveVector[0];
@@ -999,6 +1013,8 @@ void MainWindow::update_ui()
         cycleMultiplier++;
         receiveVector[0] = 1;
     }
+    
+    
 }
 
 QString formatedEditLine = "";
@@ -1717,7 +1733,7 @@ void MainWindow::realtimePlot()
     if(key - lastPointKey > 0.033)//0.002
     {
         ui->strenght_plot->graph(0)->addData(key, printTemperature);
-        ui->current_plot->graph(0)->addData(key, receiveVector[1]);
+        ui->current_plot->graph(0)->addData(key, receiveCurrent);
         lastPointKey = key;
     }
 
@@ -1737,8 +1753,115 @@ void MainWindow::realtimePlot()
  * Params        : None
  ****************************************************************/
 QElapsedTimer timeGenerationCyclogram;
+int cyclogramStation = FIRST_STATE;
+bool stateChange = true;
 void MainWindow::generationCyclogram() {
-
+    if(cyclogramStation == FIRST_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                    byteArraySendMessage[2] = OPEN;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                }
+            } // посылка команды на открытие
+            stateChange = false;
+        } else {
+            if(receiveCurrent >= receiveStopCurrent){
+                cyclogramStation = SECOND_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == SECOND_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = MOVEMENT;
+                    byteArraySendMessage[2] = 2;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                    timeGenerationCyclogram.start();
+                }
+            }// посылка команды на остановку
+            stateChange = false;
+        } else {
+            if(timeGenerationCyclogram.elapsed() >= receiveCoolTime){
+                cyclogramStation = THRID_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == THRID_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                    byteArraySendMessage[2] = CLOSE;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                }
+            }// посылка команды на закрытие
+            stateChange = false;
+        } else {
+            if(receiveStrength >= 100){
+                cyclogramStation = FOURTH_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == FOURTH_STATE){
+        if(stateChange){
+            timeGenerationCyclogram.start();
+            stateChange = false;
+        } else {
+            if(timeGenerationCyclogram.elapsed() >= receiveShakeTime){
+                cyclogramStation = FIFTH_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == FIFTH_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = MOVEMENT;
+                    byteArraySendMessage[2] = 2;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                    timeGenerationCyclogram.start();
+                }
+            }// посылка команды на остановку
+            stateChange = false;
+        } else {
+            if(timeGenerationCyclogram.elapsed() >= receiveCoolTime){
+                cyclogramStation = FIRST_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    
 }
 
 QTextStream stream (&fileLog);

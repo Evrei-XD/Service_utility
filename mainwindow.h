@@ -91,6 +91,7 @@ private slots:
     void on_stop_servo_angle_valueChanged(int value);
     void on_test_HDLC_clicked();
     void realtimePlot();
+    void generationCyclogram();
 };
 
 #endif // MAINWINDOW_H
