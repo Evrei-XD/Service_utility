@@ -3,6 +3,15 @@
 #include "constant.h"
 #include "mainwindow.h"
 
+
+int receiveCurrent = 0;
+int receiveStrength = 0;
+int receiveStopCurrent = 0;
+int receiveCoolTime = 0;
+int receiveShakeTime = 0;
+int receiveStopStrenghth = 0;
+int receiveShakesNumber = 0;
+
 QFile fileLog("Log/Log__"+QDateTime::currentDateTime().toString("hh-mm-ss  dd.MM.yyyy") + ".txt");
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM3");//указали com-порт
+    serial->setPortName("COM7");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -123,7 +132,7 @@ void MainWindow::serialRecieve()//получаем данные
     }
     if(flagIdlingCompression)
     {
-        sumCurrent += receiveVector[1];
+        sumCurrent += receiveCurrent;
         numberOfIdleCurrentValues++;
         meanCurrent = sumCurrent/numberOfIdleCurrentValues;
         ui->receive_current_max->setText(QString::number(meanCurrent));
@@ -436,7 +445,26 @@ void MainWindow::set_stule()
                     "    background-color:       white;"
                     "    border:                 2px solid #828282;"
                     "}");
-
+    ui->contorl_mode_4->setStyleSheet(
+                    "QRadioButton{"
+                    "   color: #555555;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator {"
+                    "   width:                  10px;"
+                    "   height:                 10px;"
+                    "   border-radius:          7px;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:checked {"
+                    "    background-color:       #555555;"
+                    "    border:                 2px solid #828282;"
+                    "}"
+                    ""
+                    "QRadioButton::indicator:unchecked {"
+                    "    background-color:       white;"
+                    "    border:                 2px solid #828282;"
+                    "}");
     ui->selection_com_port->setStyleSheet(
                     "QComboBox {"
                     "   color: #555555;"
@@ -937,20 +965,29 @@ void MainWindow::update_ui()
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
-    ui->receive_shakes_number->setText(QString::number((65535 * cycleMultiplier)+receiveVector[0]));
-    ui->receive_current->setText(QString::number(receiveVector[1]));
-    ui->receive_strength->setText(QString::number((receiveVector[2]-658)*2));
-    ui->receive_shake_time->setText(QString::number(receiveVector[3]));
-    ui->receive_cool_time->setText(QString::number(receiveVector[4]));
-    ui->receive_stop_current->setText(QString::number(receiveVector[5]));
-    ui->receive_stop_strenghth->setText(QString::number(receiveVector[6]));
+    if(!mCyclogramMode){
+        receiveShakesNumber = (65535 * cycleMultiplier)+receiveVector[0];
+    }
+    receiveCurrent = receiveVector[1];
+    receiveStrength = (receiveVector[2]-658)*2;
+    receiveShakeTime = receiveVector[3];
+    receiveCoolTime = receiveVector[4];
+    receiveStopCurrent = receiveVector[5];
+    receiveStopStrenghth = receiveVector[6];
+    ui->receive_shakes_number->setText(QString::number(receiveShakesNumber));
+    ui->receive_current->setText(QString::number(receiveCurrent));
+    ui->receive_strength->setText(QString::number(receiveStrength));
+    ui->receive_shake_time->setText(QString::number(receiveShakeTime));
+    ui->receive_cool_time->setText(QString::number(receiveCoolTime));
+    ui->receive_stop_current->setText(QString::number(receiveStopCurrent));
+    ui->receive_stop_strenghth->setText(QString::number(receiveStopStrenghth));
     ui->receive_temperature->setText(QString::number(receiveVector[7]>>8));
     ui->receive_nominal_temperature->setText(QString::number(receiveVector[7]&255));
     ui->receive_stop_temperature->setText(QString::number(receiveVector[8]>>8));
     ui->receive_noise_level->setText(QString::number(receiveVector[8]&255));
     ui->receive_voltage->setText(QString::number(receiveVector[9]));
 
-    if(((oldShakeNumber < receiveVector[0]) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
+    if(((oldShakeNumber < receiveShakesNumber) && (oldShakeNumber != 0)) || (oldShakeNumber == 65535))
     {
         writeToFileLog();
         ui->receive_strength_max->setText(QString::number(printStrenght));
@@ -990,14 +1027,18 @@ void MainWindow::update_ui()
         flagStartTimerGrip = true;
         timeOfIdleGrip = 0;
     }
-    if(printStrenght < (receiveVector[2]-658)*2){printStrenght = (receiveVector[2]-658)*2;}
+    if(printStrenght < (receiveStrength)){printStrenght = receiveStrength;}
     if(printTemperature < (receiveVector[7]>>8)){printTemperature = receiveVector[7]>>8;}
     if(printStrenght != 0){flagIdlingCompression = false;}
-    oldShakeNumber = receiveVector[0];
-    if(receiveVector[0] == 65535)
+    oldShakeNumber = receiveShakesNumber;
+    if(receiveShakesNumber == 65535)
     {
         cycleMultiplier++;
-        receiveVector[0] = 1;
+        receiveShakesNumber = 1;
+    }
+
+    if(mCyclogramStart){
+        generationCyclogram();
     }
 }
 
@@ -1137,22 +1178,28 @@ void MainWindow::on_send_stop_temperature_textChanged(const QString &arg1)
 }
 void MainWindow::on_start_clicked()
 {
-    if(flagThird)
-    {
-        timer.start();
-        flagFirst = true;
-        flagSecond = false;
-        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+    if(mCyclogramMode){
+        mCyclogramStart = true;
+    } else {
+        if(flagThird)
         {
-            byteArraySendMessage[0] = SEND;
-            byteArraySendMessage[1] = MOVEMENT;
-            byteArraySendMessage[2] = 1;
-            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            timer.start();
+            flagFirst = true;
+            flagSecond = false;
+            for (int i=PROSITY-10; i<=PROSITY+20; i++)
+            {
+                byteArraySendMessage[0] = SEND;
+                byteArraySendMessage[1] = MOVEMENT;
+                byteArraySendMessage[2] = 1;
+                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            }
         }
     }
 }
 void MainWindow::on_pause_clicked()
 {
+    mCyclogramStart = false;
+    resetCyclogram();
     if(flagThird)
     {
         timer.start();
@@ -1166,20 +1213,26 @@ void MainWindow::on_pause_clicked()
             QTimer::singleShot(i, this, SLOT(buffer_send_message()));
         }
     }
+
 }
 void MainWindow::on_stop_clicked()
 {
-    if(flagThird)
-    {
-        timer.start();
-        flagFirst = true;
-        flagSecond = false;
-        for (int i=PROSITY-10; i<=PROSITY+20; i++)
+    if(mCyclogramMode){
+        mCyclogramStart = false;
+        resetCyclogram();
+    } else {
+        if(flagThird)
         {
-            byteArraySendMessage[0] = SEND;
-            byteArraySendMessage[1] = MOVEMENT;
-            byteArraySendMessage[2] = 3;
-            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            timer.start();
+            flagFirst = true;
+            flagSecond = false;
+            for (int i=PROSITY-10; i<=PROSITY+20; i++)
+            {
+                byteArraySendMessage[0] = SEND;
+                byteArraySendMessage[1] = MOVEMENT;
+                byteArraySendMessage[2] = 3;
+                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            }
         }
     }
 }
@@ -1327,6 +1380,8 @@ void MainWindow::on_contorl_mode_clicked()
             byteArraySendMessage[1] = CONTROL_MODE;
             byteArraySendMessage[2] = HDLC;
             QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            mCyclogramMode = false;
+            mCyclogramStart = false;
         }
     }
 }
@@ -1343,6 +1398,8 @@ void MainWindow::on_contorl_mode_2_clicked()
             byteArraySendMessage[1] = CONTROL_MODE;
             byteArraySendMessage[2] = SERVO;
             QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            mCyclogramMode = false;
+            mCyclogramStart = false;
         }
     }
 }
@@ -1359,8 +1416,14 @@ void MainWindow::on_contorl_mode_3_clicked()
             byteArraySendMessage[1] = CONTROL_MODE;
             byteArraySendMessage[2] = DC;
             QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+            mCyclogramMode = false;
+            mCyclogramStart = false;
         }
     }
+}
+void MainWindow::on_contorl_mode_4_clicked()
+{
+    mCyclogramMode = true;
 }
 void MainWindow::on_servo_angle_valueChanged(int value)
 {
@@ -1716,8 +1779,8 @@ void MainWindow::realtimePlot()
     static double lastPointKey = 0;
     if(key - lastPointKey > 0.033)//0.002
     {
-        ui->strenght_plot->graph(0)->addData(key, printTemperature);
-        ui->current_plot->graph(0)->addData(key, receiveVector[1]);
+        ui->strenght_plot->graph(0)->addData(key, receiveStrength);
+        ui->current_plot->graph(0)->addData(key, receiveCurrent);
         lastPointKey = key;
     }
 
@@ -1737,8 +1800,125 @@ void MainWindow::realtimePlot()
  * Params        : None
  ****************************************************************/
 QElapsedTimer timeGenerationCyclogram;
+bool stateChange = true;
 void MainWindow::generationCyclogram() {
+    if(cyclogramStation == FIRST_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                    byteArraySendMessage[2] = OPEN;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
 
+                }
+            } // посылка команды на открытие
+            stateChange = false;
+            receiveShakesNumber += 1;
+            qDebug() << "CyclogramStation = FIRST_STATE";
+        } else {
+            if(receiveCurrent >= receiveStopCurrent){
+                cyclogramStation = SECOND_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == SECOND_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = MOVEMENT;
+                    byteArraySendMessage[2] = 2;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                }
+            }// посылка команды на остановку
+            stateChange = false;
+            timeGenerationCyclogram.start();
+            qDebug() << "CyclogramStation = SECOND_STATE";
+        } else {
+            if(timeGenerationCyclogram.elapsed() >= receiveCoolTime){
+                cyclogramStation = THRID_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == THRID_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = SINGLE_MOVEMENT;
+                    byteArraySendMessage[2] = CLOSE;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                }
+            }// посылка команды на закрытие
+            stateChange = false;
+            qDebug() << "CyclogramStation = THRID_STATE";
+        } else {
+            if(receiveStrength >= 100){
+                cyclogramStation = FOURTH_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == FOURTH_STATE){
+        if(stateChange){
+            timeGenerationCyclogram.start();
+            stateChange = false;
+            qDebug() << "CyclogramStation = FOURTH_STATE";
+        } else {
+            if(timeGenerationCyclogram.elapsed() >= receiveShakeTime){
+                cyclogramStation = FIFTH_STATE;
+                stateChange = true;
+            }
+        }
+    }
+    if(cyclogramStation == FIFTH_STATE){
+        if(stateChange){
+            if(flagThird)
+            {
+                timer.start();
+                flagFirst = true;
+                flagSecond = false;
+                for (int i=PROSITY-10; i<=PROSITY+20; i++)
+                {
+                    byteArraySendMessage[0] = SEND;
+                    byteArraySendMessage[1] = MOVEMENT;
+                    byteArraySendMessage[2] = 2;
+                    QTimer::singleShot(i, this, SLOT(buffer_send_message()));
+                    timeGenerationCyclogram.start();
+                }
+            }// посылка команды на остановку
+            stateChange = false;
+            qDebug() << "CyclogramStation = FIFTH_STATE";
+        } else {
+            if(timeGenerationCyclogram.elapsed() >= receiveCoolTime){
+                cyclogramStation = FIRST_STATE;
+                stateChange = true;
+            }
+        }
+    }
+}
+
+void MainWindow::resetCyclogram() {
+    cyclogramStation = FIRST_STATE;
+    stateChange = true;
 }
 
 QTextStream stream (&fileLog);
@@ -1748,7 +1928,9 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number((65535 * cycleMultiplier)+receiveVector[0])+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила-" + QString::number(printStrenght)+"       Температура-" + QString::number(printTemperature)+"       Уровень шума-" + QString::number(meanNoiseLevel)+"       Время сжатия-"+QString::number(timeOfIdleGrip)+"       Время-"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват-"+QString::number(periodEnergy)+"       Оставшаяся энергия теоретически-"+QString::number(enrgyRestTheoretical)+"       Оставшаяся энергия расчитанна-"+QString::number(enrgyRestPractical)+"\n";
+        stream <<"№" + QString::number(receiveShakesNumber)+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила-" + QString::number(printStrenght)+"       Температура-" + QString::number(printTemperature)+"       Уровень шума-" + QString::number(meanNoiseLevel)+"       Время сжатия-"+QString::number(timeOfIdleGrip)+"       Время-"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват-"+QString::number(periodEnergy)+"       Оставшаяся энергия теоретически-"+QString::number(enrgyRestTheoretical)+"       Оставшаяся энергия расчитанна-"+QString::number(enrgyRestPractical)+"\n";
         fileLog.close();
     }
 }
+
+

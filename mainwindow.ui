@@ -2947,7 +2947,7 @@
       <rect>
        <x>20</x>
        <y>0</y>
-       <width>351</width>
+       <width>271</width>
        <height>31</height>
       </rect>
      </property>
@@ -2973,6 +2973,13 @@
        <widget class="QRadioButton" name="contorl_mode_3">
         <property name="text">
          <string>DC</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="contorl_mode_4">
+        <property name="text">
+         <string>Внутренний</string>
         </property>
        </widget>
       </item>

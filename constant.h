@@ -47,4 +47,13 @@ static const int DC = 3;
 //minimum delay between packets
 static const int PROSITY = 30;
 
+//cyclogram station
+enum {
+    FIRST_STATE = 1,
+    SECOND_STATE = 2,
+    THRID_STATE = 3,
+    FOURTH_STATE = 4,
+    FIFTH_STATE = 5};
+
+
 #endif // CONSTANT_H

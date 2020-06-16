@@ -40,12 +40,15 @@ private:
     QString productIdentifier;
     QString vendorIdentifier;
     bool sendFlag = true;
+    bool mCyclogramMode = false;
+    bool mCyclogramStart = false;
     int printStrenght = 0;
     int printTemperature = 0;
     float meanCurrent = 0;
     float meanNoiseLevel = 0;
     float meanVoltage = 0;
     int lastMeanCycleVoltage = 0;
+    int cyclogramStation = 1;
     float startVoltage = 0;
     float periodEnergy = 0;
     float sumPeriodEnergy = 0;
@@ -84,6 +87,7 @@ private slots:
     void on_contorl_mode_clicked();
     void on_contorl_mode_2_clicked();
     void on_contorl_mode_3_clicked();
+    void on_contorl_mode_4_clicked();
     void on_servo_angle_valueChanged(int value);
     void on_send_nominal_temperature_textChanged(const QString &arg1);
     void on_send_stop_temperature_textChanged(const QString &arg1);
@@ -92,6 +96,7 @@ private slots:
     void on_test_HDLC_clicked();
     void realtimePlot();
     void generationCyclogram();
+    void resetCyclogram();
 };
 
 #endif // MAINWINDOW_H
