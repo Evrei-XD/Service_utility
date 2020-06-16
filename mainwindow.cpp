@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM7");//указали com-порт
+    serial->setPortName("COM3");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -1928,7 +1928,7 @@ void MainWindow::writeToFileLog()
     if (fileLog.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         stream.readAll();
-        stream <<"№" + QString::number(receiveShakesNumber)+"       Средний ток:" + QString::number(meanCurrent)+"       Максимальная сила-" + QString::number(printStrenght)+"       Температура-" + QString::number(printTemperature)+"       Уровень шума-" + QString::number(meanNoiseLevel)+"       Время сжатия-"+QString::number(timeOfIdleGrip)+"       Время-"+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват-"+QString::number(periodEnergy)+"       Оставшаяся энергия теоретически-"+QString::number(enrgyRestTheoretical)+"       Оставшаяся энергия расчитанна-"+QString::number(enrgyRestPractical)+"\n";
+        stream <<"№" + QString::number(receiveShakesNumber)+"       Средний ток= " + QString::number(meanCurrent)+"       Максимальная сила= " + QString::number(printStrenght)+"       Температура= " + QString::number(printTemperature)+"       Уровень шума= " + QString::number(meanNoiseLevel)+"       Время сжатия= "+QString::number(timeOfIdleGrip)+"       Время= "+QDateTime::currentDateTime().toString("hh:mm")+"       Энергия на сват= "+QString::number(periodEnergy)+"       Оставшаяся энергия теоретически= "+QString::number(enrgyRestTheoretical)+"       Оставшаяся энергия расчитанна= "+QString::number(enrgyRestPractical)+"\n";
         fileLog.close();
     }
 }
