@@ -58,6 +58,8 @@ private:
     float enrgyRestTheoretical = 0; //энергия, которая осталась в батарейке, если считать батарейку полностью заряженной изначально
     int cycleMultiplier = 0;//необходим для продолжения счёта после превышения 65534 циклов(увеличивается на 1 с каждым циклом)
     QTimer timer_plot;
+    static bool m_synchronized;
+
 
 private slots:
     void serialRecieve();//получаем данные

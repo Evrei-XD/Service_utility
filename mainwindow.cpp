@@ -70,6 +70,9 @@ MainWindow::~MainWindow()
     delete serial;
 }
 
+bool MainWindow::m_synchronized = false;
+
+
 QElapsedTimer timerGrip;
 quint16 receiveVector[10];
 QString reseiveMessage = "";
@@ -88,13 +91,14 @@ int timeOfIdleGrip = 0;
 //bool second = true;
 int lineLength = 0;
 QList<QByteArray> sep;
+QString packet = "";
 void MainWindow::serialRecieve()//получаем данные
 {
     if(VANIA_MATVEI){
         //    schetchik++;
         //    if(schetchik % 255 == 1){second = true;}
             byteArreyReceiveMessage = serial->readAll();//читаем всё
-        //    qDebug()<< "Массив "<<byteArreyReceiveMessage;
+//            qDebug()<< "Строка "<<packet;
         //    byteArreyReceiveMessage[0] = 0;
         //    if(first)
         //    {
@@ -134,46 +138,68 @@ void MainWindow::serialRecieve()//получаем данные
             {
                 receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
             }
-            if(flagIdlingCompression)
-            {
-        //        qDebug()<< "flagIdlingCompression = true";
-                sumCurrent += receiveCurrent;
-                numberOfIdleCurrentValues++;
-                meanCurrent = sumCurrent/numberOfIdleCurrentValues;
-                ui->receive_current_max->setText(QString::number(meanCurrent));
-                if(flagStartTimerGrip)
-                {
-                    timerGrip.start();
-                    flagStartTimerGrip = false;
-                }
-                timeOfIdleGrip = timerGrip.elapsed();
-            }
-
-            //calculate mean noise level
-            sumNoiseLevel += receiveVector[8]&255;
-            numberNoiseLevel ++;
-            meanNoiseLevel = sumNoiseLevel/numberNoiseLevel;
-
-            //calculate mean voltage level
-            sumVoltage += receiveVector[9];
-            numberVoltage ++;
-            meanVoltage = sumVoltage/numberVoltage;
     }else{
-        char buf[1024];
-        while(true){
-            if(serial->bytesAvailable()>0){
-                if(serial->canReadLine()){
-                    lineLength = serial->readLine(buf, 1024);
-                    QByteArray input(buf);
-                    sep = input.split(' ');
+        for(;;)
+            {
+                const auto bytesAvailable = serial->bytesAvailable();
+                if(!m_synchronized) {
+                    if(bytesAvailable < 4)
+                        return;
+                    const auto head = serial->peek(4);
+                    if(head != "FCD>") { //в head должна быть запись начала пакета. В моём случае начало пакета это FCD> у тебя будет другое
+                        serial->read(1);
+                        continue;
+                    } else {
+                        m_synchronized = true;
+                    }
+                } else {
+                    const auto probe = serial->peek(bytesAvailable);
+                    const auto tailIndex = probe.indexOf("\r");
+                    if(tailIndex == -1)
+                        return;
+                    packet = serial->read(tailIndex + 2);
+                    qDebug() << "Ответ записи значений: " << packet;
+                    QList<QString> value = packet.split(' ');
+
+                    for(int i=0; i<14; i+=2)
+                    {
+                        receiveVector[i/2] =value[i/2+1].toInt();
+                    }
+                    quint16 temp = 0;
+                    temp = value[8].toInt() << 8;
+                    receiveVector[7] = temp + value[9].toInt();
+                    temp = value[10].toInt() << 8;
+                    receiveVector[8] = temp + value[11].toInt();
+                    receiveVector[9] = value[12].toInt();
+                    qDebug() << receiveVector[0] << receiveVector[1] << receiveVector[2] << receiveVector[3] << receiveVector[4] << receiveVector[5] << receiveVector[6] << receiveVector[7] << receiveVector[8];
+                    m_synchronized = false;
                 }
             }
+    }
+    if(flagIdlingCompression)
+    {
+//        qDebug()<< "flagIdlingCompression = true";
+        sumCurrent += receiveCurrent;
+        numberOfIdleCurrentValues++;
+        meanCurrent = sumCurrent/numberOfIdleCurrentValues;
+        ui->receive_current_max->setText(QString::number(meanCurrent));
+        if(flagStartTimerGrip)
+        {
+            timerGrip.start();
+            flagStartTimerGrip = false;
         }
-//        for(int i=0; i<lineLength; i++){
-//            qDebug()<< sep;
-//        }
+        timeOfIdleGrip = timerGrip.elapsed();
     }
 
+    //calculate mean noise level
+    sumNoiseLevel += receiveVector[8]&255;
+    numberNoiseLevel ++;
+    meanNoiseLevel = sumNoiseLevel/numberNoiseLevel;
+
+    //calculate mean voltage level
+    sumVoltage += receiveVector[9];
+    numberVoltage ++;
+    meanVoltage = sumVoltage/numberVoltage;
 }
 
 void MainWindow::on_send_message_clicked()
@@ -982,7 +1008,7 @@ void MainWindow::update_ui()
     {
         QByteArray byteArrayMessage;
         byteArrayMessage[0] = 0;
-        serial->write(byteArrayMessage);
+//        serial->write(byteArrayMessage);
         QTimer::singleShot(PROSITY, this, SLOT(update_ui()));
         timerUpdate.start();
     }
@@ -1770,7 +1796,7 @@ void MainWindow::add_graph()
     /* Configure x and y-Axis to display Labels */
     ui->strenght_plot->xAxis->setTickLabelFont(QFont(QFont().family(),6));
     ui->strenght_plot->yAxis->setTickLabelFont(QFont(QFont().family(),6));
-    ui->strenght_plot->yAxis->setLabel("мВ");
+    ui->strenght_plot->yAxis->setLabel("г");
     ui->strenght_plot->xAxis->setLabel("Время (с)");
 
     /* Make top and right axis visible, but without ticks and label */
