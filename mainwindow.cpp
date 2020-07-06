@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    ui->edit_line->setText("f0 ab 1d");
 
     serial = new QSerialPort(this);//новый экземпляр класса AbstractSerial
-    serial->setPortName("COM3");//указали com-порт
+    serial->setPortName("COM5");//указали com-порт
     serial->open((QIODevice::ReadWrite));//открыли и параметры порта (далее)
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
@@ -86,73 +86,94 @@ int timeOfIdleGrip = 0;
 //int schetchik2 = 2;
 //bool first = true;
 //bool second = true;
+int lineLength = 0;
+QList<QByteArray> sep;
 void MainWindow::serialRecieve()//получаем данные
 {
-//    schetchik++;
-//    if(schetchik % 255 == 1){second = true;}
-    byteArreyReceiveMessage = serial->readAll();//читаем всё
-//    byteArreyReceiveMessage[0] = 0;
-//    if(first)
-//    {
-//        byteArreyReceiveMessage[1] = 1;
-//        first=false;
-//    } else {
-//        if(second)
-//        {
-//            byteArreyReceiveMessage[1] = schetchik2++;
-//            second=false;
-//        } else {
-//            byteArreyReceiveMessage[1] = schetchik2;
-//        }
-//    }
-//    byteArreyReceiveMessage[2] = 0;
-//    byteArreyReceiveMessage[3] = 2+schetchik;
-//    byteArreyReceiveMessage[4] = 0;
-//    byteArreyReceiveMessage[5] = 3+schetchik;
-//    byteArreyReceiveMessage[6] = 0;
-//    byteArreyReceiveMessage[7] = 4+schetchik;
-//    byteArreyReceiveMessage[8] = 0;
-//    byteArreyReceiveMessage[9] = 5+schetchik;
-//    byteArreyReceiveMessage[10] = 0;
-//    byteArreyReceiveMessage[11] = 6+schetchik;
-//    byteArreyReceiveMessage[12] = 0;
-//    byteArreyReceiveMessage[13] = 7+schetchik;
-//    byteArreyReceiveMessage[14] = 8+schetchik;
-//    byteArreyReceiveMessage[15] = 9+schetchik;
-//    byteArreyReceiveMessage[16] = 10+schetchik;
-//    byteArreyReceiveMessage[17] = 11+schetchik;
-//    byteArreyReceiveMessage[18] = 28;
-//    byteArreyReceiveMessage[19] = 134-schetchik;
-    QDataStream dataStream(byteArreyReceiveMessage);
-    serialBuffer = byteArreyReceiveMessage.toHex();
+    if(VANIA_MATVEI){
+        //    schetchik++;
+        //    if(schetchik % 255 == 1){second = true;}
+            byteArreyReceiveMessage = serial->readAll();//читаем всё
+        //    qDebug()<< "Массив "<<byteArreyReceiveMessage;
+        //    byteArreyReceiveMessage[0] = 0;
+        //    if(first)
+        //    {
+        //        byteArreyReceiveMessage[1] = 1;
+        //        first=false;
+        //    } else {
+        //        if(second)
+        //        {
+        //            byteArreyReceiveMessage[1] = schetchik2++;
+        //            second=false;
+        //        } else {
+        //            byteArreyReceiveMessage[1] = schetchik2;
+        //        }
+        //    }
+        //    byteArreyReceiveMessage[2] = 0;
+        //    byteArreyReceiveMessage[3] = 2+schetchik;
+        //    byteArreyReceiveMessage[4] = 0;
+        //    byteArreyReceiveMessage[5] = 3+schetchik;
+        //    byteArreyReceiveMessage[6] = 0;
+        //    byteArreyReceiveMessage[7] = 4+schetchik;
+        //    byteArreyReceiveMessage[8] = 0;
+        //    byteArreyReceiveMessage[9] = 5+schetchik;
+        //    byteArreyReceiveMessage[10] = 0;
+        //    byteArreyReceiveMessage[11] = 6+schetchik;
+        //    byteArreyReceiveMessage[12] = 0;
+        //    byteArreyReceiveMessage[13] = 7+schetchik;
+        //    byteArreyReceiveMessage[14] = 8+schetchik;
+        //    byteArreyReceiveMessage[15] = 9+schetchik;
+        //    byteArreyReceiveMessage[16] = 10+schetchik;
+        //    byteArreyReceiveMessage[17] = 11+schetchik;
+        //    byteArreyReceiveMessage[18] = 28;
+        //    byteArreyReceiveMessage[19] = 134-schetchik;
+            QDataStream dataStream(byteArreyReceiveMessage);
+            serialBuffer = byteArreyReceiveMessage.toHex();
 
-    for(int i=0; i<byteArreyReceiveMessage.size(); i+=2)
-    {
-        receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
-    }
-    if(flagIdlingCompression)
-    {
-        sumCurrent += receiveCurrent;
-        numberOfIdleCurrentValues++;
-        meanCurrent = sumCurrent/numberOfIdleCurrentValues;
-        ui->receive_current_max->setText(QString::number(meanCurrent));
-        if(flagStartTimerGrip)
-        {
-            timerGrip.start();
-            flagStartTimerGrip = false;
+            for(int i=0; i<byteArreyReceiveMessage.size(); i+=2)
+            {
+                receiveVector[i/2] =qFromBigEndian<quint16>(((const uchar*)byteArreyReceiveMessage.constData()+i));
+            }
+            if(flagIdlingCompression)
+            {
+        //        qDebug()<< "flagIdlingCompression = true";
+                sumCurrent += receiveCurrent;
+                numberOfIdleCurrentValues++;
+                meanCurrent = sumCurrent/numberOfIdleCurrentValues;
+                ui->receive_current_max->setText(QString::number(meanCurrent));
+                if(flagStartTimerGrip)
+                {
+                    timerGrip.start();
+                    flagStartTimerGrip = false;
+                }
+                timeOfIdleGrip = timerGrip.elapsed();
+            }
+
+            //calculate mean noise level
+            sumNoiseLevel += receiveVector[8]&255;
+            numberNoiseLevel ++;
+            meanNoiseLevel = sumNoiseLevel/numberNoiseLevel;
+
+            //calculate mean voltage level
+            sumVoltage += receiveVector[9];
+            numberVoltage ++;
+            meanVoltage = sumVoltage/numberVoltage;
+    }else{
+        char buf[1024];
+        while(true){
+            if(serial->bytesAvailable()>0){
+                if(serial->canReadLine()){
+                    lineLength = serial->readLine(buf, 1024);
+                    QByteArray input(buf);
+                    sep = input.split(' ');
+                }
+            }
         }
-        timeOfIdleGrip = timerGrip.elapsed();
+//        for(int i=0; i<lineLength; i++){
+//            qDebug()<< sep;
+//        }
     }
 
-    //calculate mean noise level
-    sumNoiseLevel += receiveVector[8]&255;
-    numberNoiseLevel ++;
-    meanNoiseLevel = sumNoiseLevel/numberNoiseLevel;
-
-    //calculate mean voltage level
-    sumVoltage += receiveVector[9];
-    numberVoltage ++;
-    meanVoltage = sumVoltage/numberVoltage;
 }
 
 void MainWindow::on_send_message_clicked()
@@ -996,6 +1017,7 @@ void MainWindow::update_ui()
         printStrenght = 0;
         printTemperature = 0;
         flagIdlingCompression = true;
+//        qDebug()<< "real flagIdlingCompression = true";
         meanCurrent = 0;
         numberOfIdleCurrentValues = 0;
         sumCurrent = 0;
@@ -1006,7 +1028,7 @@ void MainWindow::update_ui()
         {
             startVoltage = meanVoltage;
             maxButteryEnergyCalculated = ((startVoltage/1000*1.2*3600)-MIN_BATTERY_ENERGY_TEORETICAL)*3.3636;
-            qDebug() << "startVoltage = " + QString::number(startVoltage/1000) +  "   maxButteryEnergyCalculated = " + QString::number(maxButteryEnergyCalculated);
+//            qDebug() << "startVoltage = " + QString::number(startVoltage/1000) +  "   maxButteryEnergyCalculated = " + QString::number(maxButteryEnergyCalculated);
             ui->max_energy->setText(QString::number(MAX_BATTERY_ENERGY_TEORETICAL));
             ui->max_energy_calculated->setText(QString::number(maxButteryEnergyCalculated));
             lastMeanCycleVoltage = meanVoltage;
@@ -1029,14 +1051,17 @@ void MainWindow::update_ui()
     }
     if(printStrenght < (receiveStrength)){printStrenght = receiveStrength;}
     if(printTemperature < (receiveVector[7]>>8)){printTemperature = receiveVector[7]>>8;}
-    if(printStrenght != 0){flagIdlingCompression = false;}
+    if(printStrenght >= MIN_CICLOGRAMM_STRENGHT){
+//        qDebug()<< "real flagIdlingCompression = false";
+        flagIdlingCompression = false;
+    }
+
     oldShakeNumber = receiveShakesNumber;
     if(receiveShakesNumber == 65535)
     {
         cycleMultiplier++;
         receiveShakesNumber = 1;
     }
-
     if(mCyclogramStart){
         generationCyclogram();
     }
@@ -1068,8 +1093,6 @@ void MainWindow::on_edit_line_textChanged(const QString &arg1)
         string.chop(1);
         ui->edit_line->setText(string);
     }
-
-
 }
 
 QElapsedTimer timer;
@@ -1217,22 +1240,19 @@ void MainWindow::on_pause_clicked()
 }
 void MainWindow::on_stop_clicked()
 {
-    if(mCyclogramMode){
-        mCyclogramStart = false;
-        resetCyclogram();
-    } else {
-        if(flagThird)
+    mCyclogramStart = false;
+    resetCyclogram();
+    if(flagThird)
+    {
+        timer.start();
+        flagFirst = true;
+        flagSecond = false;
+        for (int i=PROSITY-10; i<=PROSITY+20; i++)
         {
-            timer.start();
-            flagFirst = true;
-            flagSecond = false;
-            for (int i=PROSITY-10; i<=PROSITY+20; i++)
-            {
-                byteArraySendMessage[0] = SEND;
-                byteArraySendMessage[1] = MOVEMENT;
-                byteArraySendMessage[2] = 3;
-                QTimer::singleShot(i, this, SLOT(buffer_send_message()));
-            }
+            byteArraySendMessage[0] = SEND;
+            byteArraySendMessage[1] = MOVEMENT;
+            byteArraySendMessage[2] = 3;
+            QTimer::singleShot(i, this, SLOT(buffer_send_message()));
         }
     }
 }
@@ -1510,7 +1530,7 @@ void MainWindow::buffer_send_message ()
 }
 void MainWindow::send_message ()
 {
-    qDebug() << "MESSAGE"<<timerUpdate.elapsed();
+//    qDebug() << "MESSAGE"<<timerUpdate.elapsed();
     timerUpdate.start();
     sendFlag = true;
     flagThird = true;
@@ -1801,6 +1821,7 @@ void MainWindow::realtimePlot()
  ****************************************************************/
 QElapsedTimer timeGenerationCyclogram;
 bool stateChange = true;
+int currentIterator = 0;
 void MainWindow::generationCyclogram() {
     if(cyclogramStation == FIRST_STATE){
         if(stateChange){
@@ -1819,12 +1840,22 @@ void MainWindow::generationCyclogram() {
                 }
             } // посылка команды на открытие
             stateChange = false;
-            receiveShakesNumber += 1;
+            timeGenerationCyclogram.start();
             qDebug() << "CyclogramStation = FIRST_STATE";
         } else {
+            //дописать логику считывания нескольких показаний тока
             if(receiveCurrent >= receiveStopCurrent){
+               if(currentIterator==NUMBER_CURRENT_ITERATION_FOR_CUT_OFF ){
+                   cyclogramStation = SECOND_STATE;
+                   stateChange = true;
+                   currentIterator = 0;
+               }
+                currentIterator++;
+            }
+            if(timeGenerationCyclogram.elapsed() >= MAX_CICLOGRAMM_STAGE_TIME){
                 cyclogramStation = SECOND_STATE;
                 stateChange = true;
+                currentIterator = 0;
             }
         }
     }
@@ -1844,10 +1875,10 @@ void MainWindow::generationCyclogram() {
                 }
             }// посылка команды на остановку
             stateChange = false;
-            timeGenerationCyclogram.start();
+            timeGenerationCyclogram.start(); 
             qDebug() << "CyclogramStation = SECOND_STATE";
         } else {
-            if(timeGenerationCyclogram.elapsed() >= receiveCoolTime){
+            if(timeGenerationCyclogram.elapsed() >= receiveCoolTime || timeGenerationCyclogram.elapsed() >= MAX_CICLOGRAMM_STAGE_TIME){
                 cyclogramStation = THRID_STATE;
                 stateChange = true;
             }
@@ -1869,9 +1900,11 @@ void MainWindow::generationCyclogram() {
                 }
             }// посылка команды на закрытие
             stateChange = false;
+            receiveShakesNumber += 1;
+            timeGenerationCyclogram.start();
             qDebug() << "CyclogramStation = THRID_STATE";
         } else {
-            if(receiveStrength >= 100){
+            if(receiveStrength >= MIN_CICLOGRAMM_STRENGHT || timeGenerationCyclogram.elapsed() >= MAX_CICLOGRAMM_STAGE_TIME){
                 cyclogramStation = FOURTH_STATE;
                 stateChange = true;
             }
@@ -1883,7 +1916,7 @@ void MainWindow::generationCyclogram() {
             stateChange = false;
             qDebug() << "CyclogramStation = FOURTH_STATE";
         } else {
-            if(timeGenerationCyclogram.elapsed() >= receiveShakeTime){
+            if(timeGenerationCyclogram.elapsed() >= receiveShakeTime || timeGenerationCyclogram.elapsed() >= MAX_CICLOGRAMM_STAGE_TIME){
                 cyclogramStation = FIFTH_STATE;
                 stateChange = true;
             }

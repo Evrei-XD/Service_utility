@@ -127,6 +127,16 @@
       <string>COM15</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>COM16</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>COM17</string>
+     </property>
+    </item>
    </widget>
    <widget class="QPushButton" name="connect_button">
     <property name="geometry">

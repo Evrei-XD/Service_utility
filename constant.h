@@ -7,6 +7,10 @@ static const int TENSO_CALIB = 2;
 static const int MIO_SET_0 = 3;
 static const int MAX_BATTERY_ENERGY_TEORETICAL = 31968; // = 7,4V * 1,2A/h * 3600s
 static const float MIN_BATTERY_ENERGY_TEORETICAL = 26784; // = 6,2V * 1,2A/h * 3600s
+static const int NUMBER_CURRENT_ITERATION_FOR_CUT_OFF = 5;
+static const int MAX_CICLOGRAMM_STAGE_TIME = 3000; //задаёт в миллисекундах максимальное время нахождения на определённом этапе циклограммы(игнорирует все остальные параметры)
+static const int MIN_CICLOGRAMM_STRENGHT = 100; //задаёт в граммах минимальную силу на тензодатчике, по достижении которой начинает отсчитыватися время сжатия
+static const bool VANIA_MATVEI = true; //true-Vania  false-Matvei reseive schem
 // 36288 - 26784 = 9504‬ * 3,3636
 
 // 50%
