@@ -1016,7 +1016,7 @@ void MainWindow::update_ui()
         receiveShakesNumber = (65535 * cycleMultiplier)+receiveVector[0];
     }
     receiveCurrent = receiveVector[1];
-    receiveStrength = (receiveVector[2]-658)*2;
+    receiveStrength = receiveVector[2];
     receiveShakeTime = receiveVector[3];
     receiveCoolTime = receiveVector[4];
     receiveStopCurrent = receiveVector[5];
